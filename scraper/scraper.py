@@ -68,14 +68,19 @@ if token is None:
     sys.exit()
 print("Token: " + token)
 
+# Timetables will be saved to data directory
+if not os.path.exists("data"):
+    os.makedirs("data")
+
 # Request timetables and save to file
 for i in courselist:
     timetable = requests.get('https://timetableplanner.app.uq.edu.au/courses/search?semester_id=88&course_code=' + i, cookies={'remember_token': token})
-    if not os.path.exists("data"):
-        os.makedirs("data")
-    try: coursefile = open("data/" + i, "w+")
-    except:
-        sys.stderr.write("Unable to open file for writing")
-        sys.exit()
-    coursefile.write(timetable.text)
-    print("Saved data for " + i)
+    if timetable.ok == True:
+        try: coursefile = open("data/" + i, "w+")
+        except:
+            sys.stderr.write("Unable to open file for writing")
+            sys.exit()
+        coursefile.write(timetable.text)
+        print("Saved data for " + i)
+    else:
+        print(i + " is not a valid course code.")
