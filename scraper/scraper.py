@@ -1,4 +1,5 @@
 import sys
+import os
 import requests
 import getpass
 
@@ -70,6 +71,8 @@ print("Token: " + token)
 # Request timetables and save to file
 for i in courselist:
     timetable = requests.get('https://timetableplanner.app.uq.edu.au/courses/search?semester_id=88&course_code=' + i, cookies={'remember_token': token})
+    if not os.path.exists("data"):
+        os.makedirs("data")
     try: coursefile = open("data/" + i, "w+")
     except:
         sys.stderr.write("Unable to open file for writing")
