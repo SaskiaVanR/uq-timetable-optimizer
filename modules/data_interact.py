@@ -59,13 +59,13 @@ def get_course_info(coursename):
                     streams.append(stream)
         # Iterate over the letters and see what the counts are
         for i in range(26):
-            print(streamoccurrences[i])
             if streamoccurrences[i] == 1:
                 # There is something that only happens once
                 # This probably shouldn't be counted
                 for j in range(len(streams)):
                     if ord(streams[j].name[0]) - ord("A") == i:
                         del streams[j]
+                        break
         course = Course(coursename,  streams)
         return course
     except: return None
