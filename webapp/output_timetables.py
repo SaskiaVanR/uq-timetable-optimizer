@@ -1,6 +1,10 @@
+import classfile
+
+
 def output_timetables(subject_codes):
 
-    timetables = []
+    timetable = classfile.getTestTimetable()
+    print(timetable)
 
     file_name = "timetables.html"
     timetables_file = open(file_name, "w")
@@ -21,8 +25,7 @@ def output_timetables(subject_codes):
     </nav>\n
     ''')
 
-    for i in timetables:
+    for i in timetable:
         timetables_file.write("<tr><td>" + "" + "</td></tr>\n")
 
     timetables_file.write("</body>\n</html>")
-    
