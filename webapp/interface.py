@@ -1,5 +1,7 @@
 import output_timetables as ot
 
+from data_interact import does_course_exist
+
 import tkinter as tk
 
 
@@ -11,7 +13,24 @@ def check_codes():
 
     subject_codes = [subject_1_code, subject_2_code, subject_3_code, subject_4_code]
 
-    ot.output_timetables(subject_codes)
+    duplicate_codes = False
+    all_codes_valid = True
+
+    if len(subject_codes) == len(set(subject_codes)):
+
+        for i in subject_codes:
+            # Check the code exists
+            if does_course_exist(i) == False:
+                all_codes_valid = False
+
+        if all_codes_valid:
+            ot.output_timetables(subject_codes)
+        else:
+            subject_check_error.set("There are invalid subjects")
+
+    else:
+        subject_check_error.set("There are duplicate subjects")
+
 
 # Create window
 window = tk.Tk()
@@ -21,6 +40,8 @@ window.configure(background="white")
 window.title("UQ Timetable Optimizer")
 
 window.geometry('320x480')
+
+subject_check_error = tk.StringVar()
 
 entry_width = 12
 
@@ -33,6 +54,7 @@ subject_3_lbl = tk.Label(window, text="Subject 3", justify="right")
 subject_3_tbx = tk.Entry(window, width=entry_width)
 subject_4_lbl = tk.Label(window, text="Subject 4", justify="right")
 subject_4_tbx = tk.Entry(window, width=entry_width)
+subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error)
 options_lbl = tk.Label(window, text="Options:")
 output_timetables_btn = tk.Button(window, text="Output timetables", command=check_codes)
 
@@ -46,8 +68,9 @@ subject_3_lbl.grid(row=3, column=0, sticky="e", padx=5, pady=5)
 subject_3_tbx.grid(row=3, column=1, padx=5, pady=5)
 subject_4_lbl.grid(row=4, column=0, sticky="e", padx=5, pady=5)
 subject_4_tbx.grid(row=4, column=1, padx=5, pady=5)
-options_lbl.grid(row=5, columnspan=2, padx=5, pady=5)
-output_timetables_btn.grid(row=6, columnspan=2, padx=5, pady=5)
+subject_check_lbl.grid(row = 5, columnspan=2, padx=5, pady=5)
+options_lbl.grid(row=6, columnspan=2, padx=5, pady=5)
+output_timetables_btn.grid(row=7, columnspan=2, padx=5, pady=5)
 
 subject_lbl.configure(background="white")
 subject_1_lbl.configure(background="white")
@@ -58,6 +81,7 @@ subject_3_lbl.configure(background="white")
 subject_3_tbx.configure(background="white")
 subject_4_lbl.configure(background="white")
 subject_4_tbx.configure(background="white")
+subject_check_lbl.configure(background="white")
 options_lbl.configure(background="white")
 
 window.mainloop()

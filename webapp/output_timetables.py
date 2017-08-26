@@ -1,5 +1,7 @@
 from urllib import *
 
+
+
 def output_timetables(subject_codes):
 
     timetables = []
@@ -12,8 +14,9 @@ def output_timetables(subject_codes):
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
     <head>
+    
     <body>
-
+    <
     ''')
 
     for i in timetables:
