@@ -1,24 +1,54 @@
 
+alpha = ["A", "B", "C", "D", "E", "F", "G", "H" "I", "J" ,"K", "L", "M",\
+         "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+
 class Course():
-    def __init__(self, code, lectures, tutorials, practicals, workshops):
+    def __init__(self, code, streams):
+
+
+        #course code
         self.code = code
+        #list of classes, with index 0 (A) corresponding to all A class types
+        self.streams = [0]*26
+
+
+        
         self.lectures = lectures
         self.tutorials = tutorials
         self.practicals = practicals
         self.workshops = workshops
         self.weight = self.getWeight()
 
+
+    #sorts the given list of streams into the correct index in self.streams
+    def sortStreams(self, streams):
+        for s in streams:
+            print (s.name[0])
+            print(self.streams[ord(s.name[0])-ord("A")])
+            if (self.streams[ord(s.name[0])-ord("A")])==0:
+                self.streams[ord(s.name[0])-ord("A")] = []
+            self.streams[ord(s.name[0])-ord("A")] += [s]
+            
+
     # gets the total number of hours required for the course per week
     def getWeight(self):
+
+
+        
         time = 0
-        if len(self.lectures)!=0:
-            time += self.lectures[0].timeTotal
-        if len(self.tutorials)!=0:
-            time += self.tutorials[0].timeTotal
-        if len(self.practicals)!=0:
-            time += self.practicals[0].timeTotal
-        if len(self.workshops)!=0:
-            time += self.workshops[0].timeTotal
+
+        for i in self.streams:
+            if i!=0:
+                time += i[0].timeTotal
+##        if len(self.lectures)!=0:
+##            time += self.lectures[0].timeTotal
+##        if len(self.tutorials)!=0:
+##            time += self.tutorials[0].timeTotal
+##        if len(self.practicals)!=0:
+##            time += self.practicals[0].timeTotal
+##        if len(self.workshops)!=0:
+##            time += self.workshops[0].timeTotal
         return time
 
 class Stream():
@@ -211,7 +241,9 @@ tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
 practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
 
-infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
+infs1 = lectures + tutorials + practicals + workshops
+
+infs1200 = Course("INFS1200", infs1)
 #print (infs1200.getWeight())
 
 
@@ -226,7 +258,9 @@ tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
 practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
 practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
 
-infs2200 = Course("INFS2200", lecturesm, tutorialsm, practicalsm, workshopsm)
+infs2 = lecturesm + tutorialsm + practicalsm + workshopsm
+
+infs2200 = Course("INFS2200", infs2)
 Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
 
 t = Timetable(["INFS1200", "INFS2200"])
@@ -237,3 +271,9 @@ t.addStreams(tutorials)
 t.addStreams(practicals)
 
 #print(t.getWeight())
+
+sss = []
+sss += tutorials
+sss += practicals
+sss += lectures
+infs1200.sortStreams(sss)
