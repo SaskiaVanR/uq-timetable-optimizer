@@ -47,11 +47,53 @@ def printTimeTable(node):
     t = node.timetable
     for s in t.streams:
         print (s.code +" + " + s.name)
+
+def daysBranchAndBound(optCourses):
+    get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
+               "INFS1200", "MATH1061", "MATH1052")
+    Courses = returnDictionary()
+    emptyTimetable = Timetable(optCourses)
+    adj = getAdjDepth(emptyTimetable) 
+    emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
+    q.append(emptyNode)
+    best = []
+    bestVal = 1000
+    mostRecent = 0
+    nodes = 0
+    cut = 0
+    while len(q)>0:
+        current = q.pop()
+        nodes +=1
+        
+        
+        if nodes%5000==0:
+            print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
+        if nodes-mostRecent >=50000:
+            break
+        if nodes > 100000:
+            break
+        if current.timetable.getHDays()>bestVal:
+            
+            cut+=1
+            continue
+        if current.adjDepth == 26:
+            if current.timetable.getDays()<bestVal:
+                bestVal = current.timetable.getDays()
+                best = [current]
+                mostRecent = nodes
+                print("New best at " + str(bestVal))
+            elif current.timetable.geDays()==bestVal:
+                best += [current]
+                mostRecent = nodes
+            continue
+        children = getChildren(current)
+        for c in children:
+            q.append(c)
+    return best
         
 
 def mainBranchAndBound(optCourses):
-    get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
-               "INFS1200", "MATH1061", "MATH1052")
+    get_dictionary(*optCourses)
     Courses = returnDictionary()
     emptyTimetable = Timetable(optCourses)
     adj = getAdjDepth(emptyTimetable) 
@@ -125,6 +167,9 @@ def optimize(courses):
         for s in t.streams:
             print (s.code +" + " + s.name)
     return best
+
+def optimizeDays(courses):
+    b = DaysBranchAndBound(courses)
 
 lectures = []
 tutorials = []
