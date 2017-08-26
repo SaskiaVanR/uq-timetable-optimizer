@@ -52,6 +52,7 @@ def output_timetables(subject_codes):
 
     for time in range(1, 24):
         for day in range(0,4):
-            if time == timetable.streams.starts[0]
+            if time == timetable.streams.starts[0]:
+                D = 1
 
     timetables_file.write("</table></body>\n</html>")
