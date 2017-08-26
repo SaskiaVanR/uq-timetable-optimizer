@@ -2,6 +2,7 @@ import queue as Q
 from classfile import *
 
 
+
 #Depths
 #Lectures = 0
 #A = 1
@@ -24,11 +25,11 @@ def getChildren(node):
     for courseIndex in range(len(node.timetable.codes)):
         if node.timetable.assigned[currentDepth][courseIndex]==0:
             for stream in \
-                Courses[node.timetable.codes[index]].streams[currentDepth]:
+                Courses[node.timetable.codes[courseIndex]].streams[currentDepth]:
                 t = node.timetable.makeCopy()
                 if t.canAdd(stream):
                     t.addStream(stream)
-                    n = Node(t, node.depth+1, getAdjDepth(timetable))
+                    n = Node(t, node.depth+1, getAdjDepth(t))
                     children +=[n]
 
 
@@ -47,13 +48,10 @@ def getChildren(node):
 
 def getAdjDepth(timetable):
     #If there are missing lectures(index 11), depth is 0
-    if 0 in timetable.assigned[11]:
-        return 0
     for i in range(26):
-        if i==11:
-            continue
         if 0 in timetable.assigned[i]:
             return i
+    return 26
         
         
 
@@ -72,7 +70,7 @@ practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
 infs1 = lectures+ tutorials+ practicals+workshops
 
 
-infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
+infs1200 = Course("INFS1200", infs1)
 
 
 lecturesm = []
@@ -88,8 +86,8 @@ practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
 
 infs2 = lecturesm+ tutorialsm+ practicalsm+workshopsm
 
-infs2200 = Course("INFS2200", lecturesm, tutorialsm, practicalsm, workshopsm)
-Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
+infs2200 = Course("INFS2200", infs2)
+
 
 
 
@@ -107,21 +105,29 @@ for a, b in enumerate([0,3,4]):
 #q = Q.PriorityQueue()
 q = []
 
-emptyTimetable = Timetable(["INFS1200", "INFS2200"])
-emptyNode = Node(emptyTimetable, 0, 0)
+
+get_dictionary("INFS1200", "MATH1061", "MATH1052")
+Courses = returnDictionary()
+emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052"])
+emptyNode = Node(emptyTimetable, 0, getAdjDepth(emptyTimetable))
 q.append(emptyNode)
 best = False
 bestVal = 1000
-
+mostRecent = 0
 nodes = 0
 while len(q)>0:
     current = q.pop()
     nodes +=1
-
-    if current.adjDepth == 4:
+    if nodes%10000==0:
+        print (nodes)
+        if nodes-mostRecent >=10000:
+            break
+    if current.adjDepth == 26:
         if current.timetable.getWeight()<bestVal:
             bestVal = current.timetable.getWeight()
             best = current
+            mostRecent = nodes
+            print("New best at " + str(bestVal))
         continue
     children = getChildren(current)
     for c in children:
