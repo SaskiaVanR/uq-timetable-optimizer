@@ -220,9 +220,8 @@ class Timetable():
                     # Check if stream type has not been assigned
                     if self.assigned[j][i] == 0:
                         # Check which days this stream type is available on
-                        for k in course.streams[j]:
-                            for l in course.streams[j][k].days:
-                                if days[l] != 1:
+                            for k in course.streams[j][0].days:
+                                if days[k] != 1:
                                     # There isn't overlap
                                     return self.getDays() + 1
         return self.getDays()
