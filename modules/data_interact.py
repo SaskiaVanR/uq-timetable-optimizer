@@ -31,7 +31,7 @@ def get_course_info(coursename):
                         ['start'].split("T", 1)[1].split(":", 1)[0])
                 newend = int(coursejson['courses'][0]['activity_streams'][i]\
                         ['events'][j]\
-                        ['end'].split("T", 1)[1].split(":", 1)[0])
+                        ['end'].split("T", 1)[1].split(":", 1)[0] + 1)
                 newtime =  str(newday) + " " + str(newstart) + " " + str(newend)
                 if newtime not in times:
                     times.append(newtime)
