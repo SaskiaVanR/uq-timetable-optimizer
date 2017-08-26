@@ -6,8 +6,7 @@ from classfile import Stream
 
 # Function that gets info on a course
 # It opens the file for it and parses info from the json
-# It will eventually return the data as a Course class but for now it
-# just prints stuff
+# Return the data as a course class
 def get_course_info(coursename):
     try:
         coursejson = json.loads(open("../scraper/data/" + coursename).read())
