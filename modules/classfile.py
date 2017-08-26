@@ -1,5 +1,4 @@
 
-
 class Course():
     def __init__(self, code, lectures, tutorials, practicals, workshops):
         self.code = code
@@ -21,7 +20,6 @@ class Course():
         if len(self.workshops)!=0:
             time += self.workshops[0].timeTotal
         return time
-        
 
 class Stream():
     def __init__(self, code, name, starts, ends, days):
@@ -81,7 +79,6 @@ class Timetable():
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
         for c in self.streams:
-            print(c.days)
             for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
                     starts[day] = c.starts[index]
@@ -94,5 +91,108 @@ class Timetable():
 
             
         return weight
+
+    def getHWeight(self):
+        starts = [24, 24, 24, 24, 24]
+        ends = [0, 0, 0, 0, 0,]
+        for c in self.streams:
+            for index, day in enumerate(c.days):
+                if starts[day] > c.starts[index]:
+                    starts[day] = c.starts[index]
+                if ends[day] < c.ends[index]:
+                    ends[day] = c.ends[index]
+        weight = 0
+        for i in range(5):
+            starts[i] = starts[i]%24
+            weight += ends[i] - starts[i]
+
+        #lectures
+        for c in self.codes:
+            course = Courses[c]
+            for i in course.lectures:
+                if self.isWithinTime(i):
+                    break
+            else:
+                if len(course.lectures)>0:
+                    weight += course.lectures[0].timeTotal
                 
-           
+            for i in course.tutorials:
+                if self.isWithinTime(i):
+                    break
+            else:
+                if len(course.tutorials)>0:
+                    weight += course.tutorials[0].timeTotal
+                
+            for i in course.practicals:
+                if self.isWithinTime(i):
+                    break
+            else:
+                if len(course.practicals)>0:
+                    weight += course.practicals[0].timeTotal
+                
+            for i in course.workshops:
+                if self.isWithinTime(i):
+                    break
+            else:
+                if len(course.workshops)>0:
+                    weight += course.workshops[0].timeTotal
+                
+        return weight
+                
+    def isWithinTime(self, stream):
+        starts = [24, 24, 24, 24, 24]
+        ends = [0, 0, 0, 0, 0,]
+        for c in self.streams:
+            for index, day in enumerate(c.days):
+                if starts[day] > c.starts[index]:
+                    starts[day] = c.starts[index]
+                if ends[day] < c.ends[index]:
+                    ends[day] = c.ends[index]
+        for i in range(5):
+            starts[i] = starts[i]%24
+
+        for i in range(len(stream.starts)):
+            if not(stream.starts[i]>=starts[stream.days[i]] and\
+                stream.ends[i]<=ends[stream.days[i]]):
+                return False
+        else:
+            return True
+                    
+
+
+lectures = []
+tutorials = []
+practicals = []
+workshops = []
+lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
+tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
+tutorials +=[Stream("INFS1200", "T02", [9], [10], [4])]
+tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
+practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
+practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
+
+infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
+print (infs1200.getWeight())
+
+
+lecturesm = []
+tutorialsm = []
+practicalsm = []
+workshopsm = []
+lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
+tutorialsm +=[Stream("INFS2200", "T01", [15], [16], [3])]
+tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
+tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
+practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
+practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+
+infs2200 = Course("INFS2200", lecturesm, tutorialsm, practicalsm, workshopsm)
+Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
+
+t = Timetable(["INFS1200", "INFS2200"])
+
+t.addStreams(lectures)
+t.addStreams(tutorials)
+t.addStreams(practicals)
+
+print(t.getWeight())
