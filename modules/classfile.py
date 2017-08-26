@@ -225,6 +225,7 @@ class Timetable():
                                 if days[l] != 1:
                                     # There isn't overlap
                                     return self.getDays() + 1
+        return self.getDays()
 
 
 
