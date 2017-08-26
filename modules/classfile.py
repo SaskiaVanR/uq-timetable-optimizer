@@ -222,53 +222,89 @@ class Timetable():
                 return False
         else:
             return True
-                    
 
 
-lectures = []
-tutorials = []
-practicals = []
-workshops = []
-lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
-tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
-tutorials +=[Stream("INFS1200", "T02", [9], [10], [4])]
-tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
-practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
-practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
-
-infs1 = lectures + tutorials + practicals + workshops
-
-infs1200 = Course("INFS1200", infs1)
-#print (infs1200.getWeight())
+def getTestTimetable():
+    
 
 
-lecturesm = []
-tutorialsm = []
-practicalsm = []
-workshopsm = []
-lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
-tutorialsm +=[Stream("INFS2200", "T01", [15], [16], [3])]
-tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
-tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
-practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
-practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+    lectures = []
+    tutorials = []
+    practicals = []
+    lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
+    tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
 
-infs2 = lecturesm + tutorialsm + practicalsm + workshopsm
+    practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 
-infs2200 = Course("INFS2200", infs2)
-Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
 
-t = Timetable(["INFS1200", "INFS2200"])
+    infs1 = lectures + tutorials + practicals + workshops
 
-#print(t.getWeight())
-t.addStreams(lectures)
-t.addStreams(tutorials)
-t.addStreams(practicals)
+    infs1200 = Course("INFS1200", infs1)
+    #print (infs1200.getWeight())
 
-#print(t.getWeight())
 
-sss = []
-sss += tutorials
-sss += practicals
-sss += lectures
-infs1200.sortStreams(sss)
+    lecturesm = []
+    tutorialsm = []
+    practicalsm = []
+    lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
+    tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
+    practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+
+    infs2 = lecturesm + tutorialsm + practicalsm + workshopsm
+
+    infs2200 = Course("INFS2200", infs2)
+    Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
+
+    t = Timetable(["INFS1200", "INFS2200"])
+    streams = infs1 + infs2
+    t.addStreams(streams)
+
+    return t
+##
+##lectures = []
+##tutorials = []
+##practicals = []
+##workshops = []
+##lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
+##tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
+##tutorials +=[Stream("INFS1200", "T02", [9], [10], [4])]
+##tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
+##practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
+##practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
+##
+##infs1 = lectures + tutorials + practicals + workshops
+##
+##infs1200 = Course("INFS1200", infs1)
+###print (infs1200.getWeight())
+##
+##
+##lecturesm = []
+##tutorialsm = []
+##practicalsm = []
+##workshopsm = []
+##lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
+##tutorialsm +=[Stream("INFS2200", "T01", [15], [16], [3])]
+##tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
+##tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
+##practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
+##practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+##
+##infs2 = lecturesm + tutorialsm + practicalsm + workshopsm
+##
+##infs2200 = Course("INFS2200", infs2)
+##Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
+##
+##t = Timetable(["INFS1200", "INFS2200"])
+##
+###print(t.getWeight())
+##t.addStreams(lectures)
+##t.addStreams(tutorials)
+##t.addStreams(practicals)
+##
+###print(t.getWeight())
+##
+##sss = []
+##sss += tutorials
+##sss += practicals
+##sss += lectures
+##infs1200.sortStreams(sss)
