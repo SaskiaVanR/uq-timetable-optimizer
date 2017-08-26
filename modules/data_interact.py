@@ -1,6 +1,8 @@
 import json 
 import os
 import sys
+from classfile import Course
+from classfile import Stream
 
 # Function that gets info on a course
 # It opens the file for it and parses info from the json
@@ -9,10 +11,15 @@ import sys
 def get_course_info(coursename):
     try:
         coursejson = json.loads(open("../scraper/data/" + coursename).read())
+        # Initialise empty arrays
+        lectures = [] # Array of streams
+        tutorials = []
+        practicals = []
+        workshops = []
         for i in range(len(coursejson['courses'][0]['activity_streams'])):
             streamname = str(coursejson['courses'][0]['activity_streams']\
                     [i]['name'])
-            print(streamname) # For debugging
+            #print(streamname) # For debugging, TODO remove
             # Initialise empty arrays
             times = [] # array for testing, string
             days = [] # array of ints for each day, 0 = monday
@@ -33,11 +40,29 @@ def get_course_info(coursename):
                 newtime =  str(newday) + " " + str(newstart) + " " + str(newend)
                 if newtime not in times:
                     times.append(newtime)
-                    print(times[len(times) - 1]) # For debugging
+                    #print(times[len(times) - 1]) # For debugging, TODO remove
                     days.append(newday)
                     starts.append(newstart)
                     ends.append(newend)
-        #course = classfile.Course(coursename, 
+                if j == len(coursejson['courses'][0]['activity_streams']\
+                        [i]['events']) - 1:
+                    # At the last point in the iteration
+                    stream = Stream(coursename, streamname, starts, ends, days)
+                    if streamname[0] == "L":
+                        lectures.append(stream)
+                    elif streamname[0] == "T":
+                        tutorials.append(stream)
+                    elif streamname[0] == "P":
+                        practicals.append(stream)
+                    elif streamname[0] == "W":
+                        practicals.append(stream)
+                    else:
+                        sys.stderr.write("Error: " + streamname \
+                                + " is not a lecture, tute, prac, or workshop")
+                        return None
+        course = Course(coursename, 
+                lectures, tutorials, practicals, workshops)
+        return course
     except: return None
 
 # Function that tells you if a course exists
