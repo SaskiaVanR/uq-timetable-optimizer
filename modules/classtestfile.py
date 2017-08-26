@@ -13,3 +13,13 @@ practicals +=[Class("P02", [10], [11], "T", [3])]
 
 infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
 print (infs1200.getWeight())
+
+
+t = Timetable(["INFS1200"])
+
+t.addClasses(lectures)
+t.addClasses(tutorials)
+t.addClasses(practicals)
+
+
+print(t.getWeight())

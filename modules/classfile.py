@@ -27,7 +27,7 @@ class Class():
         self.starts = starts
         self.ends = ends
         self.ctype = ctype
-        self.day = days
+        self.days = days
         self.timeTotal = self.getTimeTotal()
 
 
@@ -49,11 +49,15 @@ class Timetable():
     def addClass(self, myClass):
         self.classes +=[myClass]
 
+    def addClasses(self, myClasses):
+        self.classes += myClasses
+
     def getWeight(self):
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
         for c in self.classes:
-            for index, day in c.days:
+            print(c.days)
+            for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
                     starts[day] = c.starts[index]
                 if ends[day] < c.ends[index]:
@@ -61,7 +65,9 @@ class Timetable():
         weight = 0
         for i in range(5):
             starts[i] = starts[i]%24
-            weight += ends[i] = starts[i]
-        
+            weight += ends[i] - starts[i]
+
+            
+        return weight
                 
            
