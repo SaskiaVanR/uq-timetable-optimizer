@@ -57,7 +57,7 @@ def get_course_info(coursename):
                         practicals.append(stream)
                     else:
                         sys.stderr.write("Error: " + streamname \
-                                + " is not a lecture, tute, prac, or workshop")
+                                + " isn't a lecture, tute, prac, or workshop\n")
                         return None
         course = Course(coursename, 
                 lectures, tutorials, practicals, workshops)
