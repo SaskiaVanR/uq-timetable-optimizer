@@ -1,7 +1,6 @@
 import sys
 import ctypes
 import tkinter as tk
-from tkinter.ttk import *
 
 import output_timetables as ot
 from data_interact import does_course_exist
