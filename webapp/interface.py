@@ -32,7 +32,7 @@ def check_codes():
             subject_check_error.set("This in an invalid subject")
 
 
-def submit_codes(subject_codes):
+def submit_codes():
     if len(checked_subject_codes) != 0:
         ot.output_timetables(checked_subject_codes)
     else:
