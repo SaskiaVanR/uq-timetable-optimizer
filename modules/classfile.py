@@ -19,8 +19,6 @@ class Course():
     #sorts the given list of streams into the correct index in self.streams
     def sortStreams(self, streams):
         for s in streams:
-            print (s.name[0])
-            print(self.streams[ord(s.name[0])-ord("A")])
             if (self.streams[ord(s.name[0])-ord("A")])==0:
                 self.streams[ord(s.name[0])-ord("A")] = []
             self.streams[ord(s.name[0])-ord("A")] += [s]
@@ -127,8 +125,6 @@ class Timetable():
                 if hour in hours[stream.days[i]]:
                     return False
         return True
-                
-        print ("done")
         
 
     def getHours(self):
