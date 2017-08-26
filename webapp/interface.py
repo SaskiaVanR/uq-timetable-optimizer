@@ -57,10 +57,11 @@ window.title("UQ Timetable Optimizer")
 subject_check_error = tk.StringVar()
 
 entry_width = None  # Width of text boxes
+font_head_size = 16
 font_body_size = 12
 
 # Create widgets
-subject_lbl = tk.Label(window, text="Enter your subjects (leave blank when N/A):", font=(font_head, 16))
+subject_lbl = tk.Label(window, text="Enter your subjects (leave blank when N/A):", font=(font_head, font_head_size))
 subject_1_lbl = tk.Label(window, text="Subject 1", justify="right", font=(font_body, font_body_size))
 subject_1_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
 subject_2_lbl = tk.Label(window, text="Subject 2", justify="right", font=(font_body, font_body_size))
@@ -70,7 +71,7 @@ subject_3_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_s
 subject_4_lbl = tk.Label(window, text="Subject 4", justify="right", font=(font_body, font_body_size))
 subject_4_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
 subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_body_size))
-options_lbl = tk.Label(window, text="Options:", font=(font_head, 16))
+options_lbl = tk.Label(window, text="Options:", font=(font_head, font_head_size))
 output_timetables_btn = tk.Button(window, text="Output timetables", command=check_codes, font=(font_body, font_body_size))
 
 # Align widgets to grid
