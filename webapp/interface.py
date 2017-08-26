@@ -7,16 +7,19 @@ from data_interact import does_course_exist
 
 
 def check_codes():
+    # Get subject codes from text boxes
     subject_1_code = str(subject_1_tbx.get())
     subject_2_code = str(subject_2_tbx.get())
     subject_3_code = str(subject_3_tbx.get())
     subject_4_code = str(subject_4_tbx.get())
 
+    # Put them into an array
     subject_codes = [subject_1_code, subject_2_code, subject_3_code, subject_4_code]
-    subject_codes = list(filter(None, subject_codes))
+    subject_codes = list(filter(None, subject_codes))  # Filter out empty values
 
     all_codes_valid = True
 
+    # Check that text has been inputted
     if len(subject_codes) == 0:
         subject_check_error.set("Enter some subjects")
 
@@ -35,9 +38,10 @@ def check_codes():
     else:
         subject_check_error.set("There are duplicate subjects")
 
+# Set widget fonts
 font_head = ""
 font_body = ""
-if 'win' in sys.platform:
+if 'win' in sys.platform:  # If windows
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
     font_head = "Segoe UI semilight"
     font_body = "Segoe UI"
@@ -49,25 +53,27 @@ window.configure(background="white")
 # Give window a title
 window.title("UQ Timetable Optimizer")
 
+# Variables for widgets
 subject_check_error = tk.StringVar()
 
-entry_width = None
-font_size = 12
+entry_width = None  # Width of text boxes
+font_body_size = 12
 
+# Create widgets
 subject_lbl = tk.Label(window, text="Enter your subjects (leave blank when N/A):", font=(font_head, 16))
-subject_1_lbl = tk.Label(window, text="Subject 1", justify="right", font=(font_body, font_size))
-subject_1_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_size))
-subject_2_lbl = tk.Label(window, text="Subject 2", justify="right", font=(font_body, font_size))
-subject_2_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_size))
-subject_3_lbl = tk.Label(window, text="Subject 3", justify="right", font=(font_body, font_size))
-subject_3_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_size))
-subject_4_lbl = tk.Label(window, text="Subject 4", justify="right", font=(font_body, font_size))
-subject_4_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_size))
-subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_size))
+subject_1_lbl = tk.Label(window, text="Subject 1", justify="right", font=(font_body, font_body_size))
+subject_1_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
+subject_2_lbl = tk.Label(window, text="Subject 2", justify="right", font=(font_body, font_body_size))
+subject_2_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
+subject_3_lbl = tk.Label(window, text="Subject 3", justify="right", font=(font_body, font_body_size))
+subject_3_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
+subject_4_lbl = tk.Label(window, text="Subject 4", justify="right", font=(font_body, font_body_size))
+subject_4_tbx = tk.Entry(window, width=entry_width, font=(font_body, font_body_size))
+subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_body_size))
 options_lbl = tk.Label(window, text="Options:", font=(font_head, 16))
-output_timetables_btn = tk.Button(window, text="Output timetables", command=check_codes, font=(font_body, font_size))
+output_timetables_btn = tk.Button(window, text="Output timetables", command=check_codes, font=(font_body, font_body_size))
 
-
+# Align widgets to grid
 subject_lbl.grid(row=0, columnspan=2, padx=10, pady=10)
 subject_1_lbl.grid(row=1, column=0, sticky="e", padx=5, pady=5)
 subject_1_tbx.grid(row=1, column=1, padx=5, pady=5)
@@ -81,6 +87,7 @@ subject_check_lbl.grid(row = 5, columnspan=2, padx=5, pady=5)
 options_lbl.grid(row=6, columnspan=2, padx=5, pady=5)
 output_timetables_btn.grid(row=7, columnspan=2, padx=5, pady=5)
 
+# Give widgets white background
 subject_lbl.configure(background="white")
 subject_1_lbl.configure(background="white")
 subject_1_tbx.configure(background="white")
@@ -93,4 +100,5 @@ subject_4_tbx.configure(background="white")
 subject_check_lbl.configure(background="white")
 options_lbl.configure(background="white")
 
+# Show window
 window.mainloop()
