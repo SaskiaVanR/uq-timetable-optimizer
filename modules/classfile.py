@@ -11,14 +11,9 @@ class Course():
         self.code = code
         #list of classes, with index 0 (A) corresponding to all A class types
         self.streams = [0]*26
-
-
-        
-        self.lectures = lectures
-        self.tutorials = tutorials
-        self.practicals = practicals
-        self.workshops = workshops
         self.weight = self.getWeight()
+
+        self.sortStreams(streams)
 
 
     #sorts the given list of streams into the correct index in self.streams
@@ -75,36 +70,36 @@ class Timetable():
     def __init__(self, codes):
         self.codes = codes
         self.streams = []
-        self.Lassigned = [0]*len(self.codes)
-        self.Tassigned = [0]*len(self.codes)
-        self.Passigned = [0]*len(self.codes)
-        self.Wassigned = [0]*len(self.codes)
+        self.assigned = self.makeAssignArray()
+
         self.needToAssign()
         
+    def makeAssignArray(self):
+        numCodes = len(self.codes)
+        array = [0]*26
+        for i in range(26):
+            array[i] = [0]*numCodes
+        return array
+
 
     def addStream(self, stream):
-        if "L"== stream.name[0]:
-            self.Lassigned[self.getCodeIndex(stream.code)] = 1
-        elif "T" == stream.name[0]:
-            self.Tassigned[self.getCodeIndex(stream.code)] = 1
-        elif "P" == stream.name[0]:
-            self.Passigned[self.getCodeIndex(stream.code)] = 1
-        elif "W" == stream.name[0]:
-            self.Wassigned[self.getCodeIndex(stream.code)] = 1
+
+        index = ord(stream.name[0]) - ord("A")
+        codeIndex = self.getCodeIndex(stream.code)
+
+        self.assigned[index][codeIndex] = 1
+
         self.streams +=[stream]
 
 
     def needToAssign(self):
         for index, code in enumerate(self.codes):
             c = Courses[code]
-            if c.lectures == []:
-                self.Lassigned[index] = -1
-            if c.tutorials == []:
-                self.Tassigned[index] = -1
-            if c.practicals == []:
-                self.Passigned[index] = -1
-            if c.workshops == []:
-                self.Wassigned[index] = -1
+            for i in range(26):
+                if c.streams[i]==0:
+                    self.assigned[index] = -1
+                    
+            
 
     def makeCopy(self):
         t = Timetable(self.codes)
