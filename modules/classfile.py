@@ -1,3 +1,5 @@
+
+
 class Course():
     def __init__(self, code, lectures, tutorials, practicals, workshops):
         self.code = code
@@ -21,17 +23,17 @@ class Course():
         return time
         
 
-class Class():
-    def __init__(self, name, starts, ends, ctype, days):
+class Stream():
+    def __init__(self, code, name, starts, ends, days):
+        self.code = code
         self.name = name
         self.starts = starts
         self.ends = ends
-        self.ctype = ctype
         self.days = days
         self.timeTotal = self.getTimeTotal()
 
 
-    # get the total number of hourse required for this class per week
+    # get the total number of hours required for this class per week
     def getTimeTotal(self):
         i = 0
         time = 0
@@ -43,19 +45,42 @@ class Class():
 
 class Timetable():
     def __init__(self, codes):
-        self.codes = []
-        self.classes = []
+        self.codes = codes
+        self.streams = []
+        self.Lassigned = [0]*len(self.codes)
+        self.Tassigned = [0]*len(self.codes)
+        self.Passigned = [0]*len(self.codes)
+        self.Wassigned = [0]*len(self.codes)
 
-    def addClass(self, myClass):
-        self.classes +=[myClass]
+    def addStream(self, stream):
+        if "L"== stream.name[0]:
+            self.Lassigned[self.getCodeIndex(stream.code)] = 1
+        elif "T" == stream.name[0]:
+            self.Tassigned[self.getCodeIndex(stream.code)] = 1
+        elif "P" == stream.name[0]:
+            self.Passigned[self.getCodeIndex(stream.code)] = 1
+        elif "W" == stream.name[0]:
+            self.Wassigned[self.getCodeIndex(stream.code)] = 1
+        self.streams +=[stream]
 
-    def addClasses(self, myClasses):
-        self.classes += myClasses
+    def addStreams(self, streams):
+        for i in streams:
+            self.addStream(i)
+
+    def getCodeIndex(self, code):
+        i = 0
+        while i< len(self.codes):
+            if self.codes[i] == code:
+                return i
+            i+=1
+        print("not a valid course code: " + code + " in " + str(self.codes))
+        return False
+        
 
     def getWeight(self):
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
-        for c in self.classes:
+        for c in self.streams:
             print(c.days)
             for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
