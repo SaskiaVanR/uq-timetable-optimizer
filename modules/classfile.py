@@ -49,6 +49,8 @@ class Timetable():
         self.Tassigned = [0]*len(self.codes)
         self.Passigned = [0]*len(self.codes)
         self.Wassigned = [0]*len(self.codes)
+        self.needToAssign()
+        
 
     def addStream(self, stream):
         if "L"== stream.name[0]:
@@ -60,6 +62,25 @@ class Timetable():
         elif "W" == stream.name[0]:
             self.Wassigned[self.getCodeIndex(stream.code)] = 1
         self.streams +=[stream]
+
+
+    def needToAssign(self):
+        for index, code in enumerate(self.codes):
+            c = Courses[code]
+            if c.lectures == []:
+                self.Lassigned[index] = -1
+            if c.tutorials == []:
+                self.Tassigned[index] = -1
+            if c.practicals == []:
+                self.Passigned[index] = -1
+            if c.workshops == []:
+                self.Wassigned[index] = -1
+
+    def makeCopy(self):
+        t = Timetable(self.codes)
+        for s in self.streams:
+            t.addStream(s)
+        return t
 
     def addStreams(self, streams):
         for i in streams:
@@ -75,10 +96,12 @@ class Timetable():
         return False
 
     def canAdd(self, stream):
+        hours = self.getHours()
         for i in range(len(stream.starts)):
-            print(stream.starts[i],stream.ends[i])
             for hour in range(stream.starts[i],stream.ends[i]):
-                continue
+                if hour in hours[stream.days[i]]:
+                    return False
+        return True
                 
         print ("done")
         
@@ -86,8 +109,11 @@ class Timetable():
     def getHours(self):
         hours = [[],[],[],[],[]]
         for s in self.streams:
-            for index, time in range(len(s.starts)):
-               continue 
+            for i in range(len(s.starts)):
+                for time in range(s.starts[i],s.ends[i]):
+                    hours[s.days[i]]+=[time]
+
+        return hours
 
     def getWeight(self):
         starts = [24, 24, 24, 24, 24]
