@@ -4,15 +4,16 @@ alpha = ["A", "B", "C", "D", "E", "F", "G", "H" "I", "J" ,"K", "L", "M",\
 
 
 class Course():
+
+    # this class stores the information for a single course
+    # a course will have a course code, and a list of streams
+
     def __init__(self, code, streams):
-
-
         #course code
         self.code = code
         #list of classes, with index 0 (A) corresponding to all A class types
         self.streams = [0]*26
         self.weight = self.getWeight()
-
         self.sortStreams(streams)
 
 
@@ -26,22 +27,10 @@ class Course():
 
     # gets the total number of hours required for the course per week
     def getWeight(self):
-
-
-        
         time = 0
-
         for i in self.streams:
             if i!=0:
                 time += i[0].timeTotal
-##        if len(self.lectures)!=0:
-##            time += self.lectures[0].timeTotal
-##        if len(self.tutorials)!=0:
-##            time += self.tutorials[0].timeTotal
-##        if len(self.practicals)!=0:
-##            time += self.practicals[0].timeTotal
-##        if len(self.workshops)!=0:
-##            time += self.workshops[0].timeTotal
         return time
 
 class Stream():
@@ -51,6 +40,7 @@ class Stream():
         self.starts = starts
         self.ends = ends
         self.days = days
+        #total number of hours for this stream
         self.timeTotal = self.getTimeTotal()
 
 
@@ -170,34 +160,13 @@ class Timetable():
         #lectures
         for c in self.codes:
             course = Courses[c]
-            for i in course.lectures:
-                if self.isWithinTime(i):
-                    break
-            else:
-                if len(course.lectures)>0:
-                    weight += course.lectures[0].timeTotal
-                
-            for i in course.tutorials:
-                if self.isWithinTime(i):
-                    break
-            else:
-                if len(course.tutorials)>0:
-                    weight += course.tutorials[0].timeTotal
-                
-            for i in course.practicals:
-                if self.isWithinTime(i):
-                    break
-            else:
-                if len(course.practicals)>0:
-                    weight += course.practicals[0].timeTotal
-                
-            for i in course.workshops:
-                if self.isWithinTime(i):
-                    break
-            else:
-                if len(course.workshops)>0:
-                    weight += course.workshops[0].timeTotal
-                
+            for letter in range(26):
+                if course.streams[letter]!=0:
+                    for i in course.streams[letter]:
+                        if self.isWithinTime(i):
+                            break
+                    else:
+                        weight += course.streams[letter][0].timeTotal              
         return weight
                 
     def isWithinTime(self, stream):
@@ -256,7 +225,7 @@ def getTestTimetable():
     t.addStreams(streams)
 
     return t
-##
+
 ##lectures = []
 ##tutorials = []
 ##practicals = []
