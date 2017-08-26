@@ -2,6 +2,7 @@
 alpha = ["A", "B", "C", "D", "E", "F", "G", "H" "I", "J" ,"K", "L", "M",\
          "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
+Courses = {}
 
 class Course():
 
@@ -225,6 +226,15 @@ def getTestTimetable():
     t.addStreams(streams)
 
     return t
+
+# Function that takes a list of courses and gets a dictionary from it
+def get_dictionary(*coursecodes):
+    courses = []
+    for i in coursecodes:
+        from data_interact import get_course_info
+        course = get_course_info(i)
+        courses.append(course)
+        Courses[i] = course
 
 ##lectures = []
 ##tutorials = []
