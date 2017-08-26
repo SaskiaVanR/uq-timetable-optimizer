@@ -224,7 +224,8 @@ class Timetable():
                             for l in course.streams[j][k].days:
                                 if days[l] != 1:
                                     # There isn't overlap
-                                    # Nothing to do here yet
+                                    return self.getDays() + 1
+
 
 
     def getDays(self):
