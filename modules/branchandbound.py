@@ -23,7 +23,7 @@ def getChildren(node):
     currentDepth = node.adjDepth
     for courseIndex in range(len(node.timetable.codes)):
         if node.timetable.assigned[currentDepth][courseIndex]==0:
-            for stream in or stream in \
+            for stream in \
                 Courses[node.timetable.codes[index]].streams[currentDepth]:
                 t = node.timetable.makeCopy()
                 if t.canAdd(stream):
@@ -47,13 +47,13 @@ def getChildren(node):
 
 def getAdjDepth(timetable):
     #If there are missing lectures(index 11), depth is 0
-    if timetable.assigned[11] !=0 and timetable.assigned:
-        continue
-
-
-
-    
+    if 0 in timetable.assigned[11]:
+        return 0
     for i in range(26):
+        if i==11:
+            continue
+        if 0 in timetable.assigned[i]:
+            return i
         
         
 
@@ -68,6 +68,10 @@ tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
 practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
 
+
+infs1 = lectures+ tutorials+ practicals+workshops
+
+
 infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
 
 
@@ -81,6 +85,8 @@ tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
 tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
 practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
 practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+
+infs2 = lecturesm+ tutorialsm+ practicalsm+workshopsm
 
 infs2200 = Course("INFS2200", lecturesm, tutorialsm, practicalsm, workshopsm)
 Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
