@@ -190,42 +190,42 @@ class Timetable():
             return True
 
 
-def getTestTimetable():
+# def getTestTimetable():
     
 
 
-    lectures = []
-    tutorials = []
-    practicals = []
-    lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
-    tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
+    # lectures = []
+    # tutorials = []
+    # practicals = []
+    # lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
+    # tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
 
-    practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
-
-
-    infs1 = lectures + tutorials + practicals
-
-    infs1200 = Course("INFS1200", infs1)
-    #print (infs1200.getWeight())
+    # practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 
 
-    lecturesm = []
-    tutorialsm = []
-    practicalsm = []
-    lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
-    tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
-    practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+    # infs1 = lectures + tutorials + practicals
 
-    infs2 = lecturesm + tutorialsm + practicalsm
+    # infs1200 = Course("INFS1200", infs1)
+    # #print (infs1200.getWeight())
 
-    infs2200 = Course("INFS2200", infs2)
-    Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
 
-    t = Timetable(["INFS1200", "INFS2200"])
-    streams = infs1 + infs2
-    t.addStreams(streams)
+    # lecturesm = []
+    # tutorialsm = []
+    # practicalsm = []
+    # lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
+    # tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
+    # practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
 
-    return t
+    # infs2 = lecturesm + tutorialsm + practicalsm
+
+    # infs2200 = Course("INFS2200", infs2)
+    # Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
+
+    # t = Timetable(["INFS1200", "INFS2200"])
+    # streams = infs1 + infs2
+    # t.addStreams(streams)
+
+    # return t
 
 # Function that takes a list of courses and gets a dictionary from it
 def get_dictionary(*coursecodes):
@@ -235,6 +235,16 @@ def get_dictionary(*coursecodes):
         course = get_course_info(i)
         courses.append(course)
         Courses[i] = course
+
+# Gets a test timetable
+def get_test_timetable():
+    get_dictionary("INFS1200")
+    timetable = Timetable(["INFS1200"])
+    streams = [Courses['INFS1200'].streams[ord("L") - ord("A")][0], \
+            Courses["INFS1200"].streams[ord("T") - ord("A")][0], \
+            Courses["INFS1200"].streams[ord("P") - ord("A")][0]]
+    timetable.addStreams(streams)
+    return timetable
 
 ##lectures = []
 ##tutorials = []
