@@ -32,11 +32,11 @@ def get_course_info(coursename):
                         ['end'].split("T", 1)[1].split(":", 1)[0])
                 newtime =  str(newday) + " " + str(newstart) + " " + str(newend)
                 if newtime not in times:
-                    days.append(newday)
-                    starts.append(newstarts)
-                    ends.append(newends)
                     times.append(newtime)
                     print(times[len(times) - 1]) # For debugging
+                    days.append(newday)
+                    starts.append(newstart)
+                    ends.append(newend)
         #course = classfile.Course(coursename, 
     except: return None
 
