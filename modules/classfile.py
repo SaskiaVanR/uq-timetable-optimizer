@@ -164,13 +164,19 @@ class Timetable():
             starts[i] = starts[i]%24
             weight += ends[i] - starts[i]
 
-        #lectures
+        #for each course
         for c in self.codes:
             course = Courses[c]
+            #for each stream type
             for letter in range(26):
+                #if the the course does not have that stream type
                 if course.streams[letter]!=0:
+                    #for each stream in that stream type for that course
                     for i in course.streams[letter]:
+                        #If there is a stream that sits entirely in the
+                        #already assigned hours
                         if self.isWithinTime(i):
+                            #break, do not add do heuristic
                             break
                     else:
                         weight += course.streams[letter][0].timeTotal              
@@ -187,13 +193,30 @@ class Timetable():
                     ends[day] = c.ends[index]
         for i in range(5):
             starts[i] = starts[i]%24
-
+        #checks if any class within a stream falls outside of already
+        #assigned hours
         for i in range(len(stream.starts)):
             if not(stream.starts[i]>=starts[stream.days[i]] and\
                 stream.ends[i]<=ends[stream.days[i]]):
                 return False
         else:
             return True
+
+
+    def getDays(self):
+        days = [0, 0, 0, 0, 0]
+        #for each assigned stream
+        for s in self.streams:
+            for d in s.days:
+                days[d] +=1
+
+        total = 0
+        for d in days:
+            if d!= 0:
+                total+=1
+        return total
+                
+                
 
 
 # def getTestTimetable():
