@@ -10,15 +10,11 @@ from classfile import Stream
 def get_course_info(coursename):
     try:
         coursejson = json.loads(open("../scraper/data/" + coursename).read())
-        # Initialise empty arrays
-        lectures = [] # Array of streams
-        tutorials = []
-        practicals = []
-        workshops = []
+        # Initialise empty array
+        streams = [] # Array of streams
         for i in range(len(coursejson['courses'][0]['activity_streams'])):
             streamname = str(coursejson['courses'][0]['activity_streams']\
                     [i]['name'])
-            #print(streamname) # For debugging, TODO remove
             # Initialise empty arrays
             times = [] # array for testing, string
             days = [] # array of ints for each day, 0 = monday
@@ -39,7 +35,6 @@ def get_course_info(coursename):
                 newtime =  str(newday) + " " + str(newstart) + " " + str(newend)
                 if newtime not in times:
                     times.append(newtime)
-                    #print(times[len(times) - 1]) # For debugging, TODO remove
                     days.append(newday)
                     starts.append(newstart)
                     ends.append(newend)
@@ -47,20 +42,8 @@ def get_course_info(coursename):
                         [i]['events']) - 1:
                     # At the last point in the iteration
                     stream = Stream(coursename, streamname, starts, ends, days)
-                    if streamname[0] == "L":
-                        lectures.append(stream)
-                    elif streamname[0] == "T":
-                        tutorials.append(stream)
-                    elif streamname[0] == "P":
-                        practicals.append(stream)
-                    elif streamname[0] == "W":
-                        practicals.append(stream)
-                    else:
-                        sys.stderr.write("Error: " + streamname \
-                                + " isn't a lecture, tute, prac, or workshop\n")
-                        return None
-        course = Course(coursename, 
-                lectures, tutorials, practicals, workshops)
+                    streams.append(stream)
+        course = Course(coursename,  streams)
         return course
     except: return None
 
