@@ -4,9 +4,10 @@ from classfile import *
 
 #Depths
 #Lectures = 0
-#Tutorials = 1
-#Practicals = 2
-#Workshops = 3
+#A = 1
+#B = 2
+#C = 3
+# etc
 
 
 class Node():
@@ -17,63 +18,44 @@ class Node():
         self.weight = timetable.getHWeight()
 
 
-
 def getChildren(node):
     children = []
-    if node.adjDepth == 0:
-        for index, l in enumerate(node.timetable.Lassigned):
-            if l==0:
-                for stream in Courses[node.timetable.codes[index]].lectures:
-                    t = node.timetable.makeCopy()
-                    if t.canAdd(stream):
-                        t.addStream(stream)
-                        n = Node(t, node.depth+1, isDone(t))
-                        children +=[n]
+    currentDepth = node.adjDepth
+    for courseIndex in range(len(node.timetable.codes)):
+        if node.timetable.assigned[currentDepth][courseIndex]==0:
+            for stream in or stream in \
+                Courses[node.timetable.codes[index]].streams[currentDepth]:
+                t = node.timetable.makeCopy()
+                if t.canAdd(stream):
+                    t.addStream(stream)
+                    n = Node(t, node.depth+1, getAdjDepth(timetable))
+                    children +=[n]
 
-    if node.adjDepth == 1:
-        for index, l in enumerate(node.timetable.Tassigned):
-            if l==0:
-                for stream in Courses[node.timetable.codes[index]].tutorials:
-                    t = node.timetable.makeCopy()
-                    if t.canAdd(stream):
-                        t.addStream(stream)
-                        n = Node(t, node.depth+1, isDone(t))
-                        children +=[n]
-    if node.adjDepth == 2:
-        for index, l in enumerate(node.timetable.Passigned):
-            if l==0:
-                for stream in Courses[node.timetable.codes[index]].practicals:
-                    t = node.timetable.makeCopy()
-                    if t.canAdd(stream):
-                        t.addStream(stream)
-                        n = Node(t, node.depth+1, isDone(t))
-                        children +=[n]
-    if node.adjDepth == 3:
-        for index, l in enumerate(node.timetable.Wassigned):
-            if l==0:
-                for stream in Courses[node.timetable.codes[index]].workshops:
-                    t = node.timetable.makeCopy()
-                    if t.canAdd(stream):
-                        t.addStream(stream)
-                        n = Node(t, node.depth+1, isDone(t))
-                        children +=[n]
+
+
+##    if node.adjDepth == 3:
+##        for index, l in enumerate(node.timetable.Wassigned):
+##            if l==0:
+##                for stream in Courses[node.timetable.codes[index]].workshops:
+##                    t = node.timetable.makeCopy()
+##                    if t.canAdd(stream):
+##                        t.addStream(stream)
+##                        n = Node(t, node.depth+1, isDone(t))
+##                        children +=[n]
     return children            
     
 
-def isDone(timetable):
-    for i in timetable.Lassigned:
-        if i ==0:
-            return 0
-    for i in timetable.Tassigned:
-        if i ==0:
-            return 1
-    for i in timetable.Passigned:
-        if i ==0:
-            return 2
-    for i in timetable.Wassigned:
-        if i ==0:
-            return 3
-    return 4
+def getAdjDepth(timetable):
+    #If there are missing lectures(index 11), depth is 0
+    if timetable.assigned[11] !=0 and timetable.assigned:
+        continue
+
+
+
+    
+    for i in range(26):
+        
+        
 
 lectures = []
 tutorials = []
