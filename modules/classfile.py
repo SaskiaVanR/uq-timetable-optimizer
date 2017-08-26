@@ -233,7 +233,7 @@ def getTestTimetable():
     practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 
 
-    infs1 = lectures + tutorials + practicals + workshops
+    infs1 = lectures + tutorials + practicals
 
     infs1200 = Course("INFS1200", infs1)
     #print (infs1200.getWeight())
@@ -246,7 +246,7 @@ def getTestTimetable():
     tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
     practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
 
-    infs2 = lecturesm + tutorialsm + practicalsm + workshopsm
+    infs2 = lecturesm + tutorialsm + practicalsm
 
     infs2200 = Course("INFS2200", infs2)
     Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
