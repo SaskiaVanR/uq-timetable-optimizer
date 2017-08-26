@@ -4,6 +4,12 @@ alpha = ["A", "B", "C", "D", "E", "F", "G", "H" "I", "J" ,"K", "L", "M",\
 
 Courses = {}
 
+# Class that stores information on a course
+# It contains the course code, and a bunch of streams
+# course.streams is a 26 dimensional array, with one entry for each letter.
+# of the alphabet. If there are lectures ("L"), they will be stored in a list
+# at course.streams[ord("L") - ord("A")]. If there are not any streams with
+# The corresponding letter, the value will be 0
 class Course():
 
     # this class stores the information for a single course
@@ -34,12 +40,24 @@ class Course():
                 time += i[0].timeTotal
         return time
 
+# Class that stores information on a stream.
+# Streams at UQ are basically classes that you can enrol in
+# Sometimes, you can enrol into a stream that gives you a certain list of
+# different classes, so each stream can contain more than one class.
+# The stream class contains the course code at stream.code, and the name
+# of the stream at stream.name. It also includes three arrays of integers,
+# days, starts, and ends. These integers contain information on class times
 class Stream():
     def __init__(self, code, name, starts, ends, days):
         self.code = code
         self.name = name
+        # Starts and ends are integers representing start and end times
+        # They represent the hour in 24-hour time
+        # Classes always start on the hour
         self.starts = starts
         self.ends = ends
+        # days are integers representing the days classes are on
+        # They are integers, with 0 representing Monday and 6, Sunday
         self.days = days
         #total number of hours for this stream
         self.timeTotal = self.getTimeTotal()
@@ -54,7 +72,10 @@ class Stream():
             i+=1
         return time
 
-
+# Class that stores information on a timetable.
+# It contains a bunch of arrays
+# Most important are timetable.codes (Course codes),
+# timetable.streams (an array of streams representing the ones chosen)
 class Timetable():
     def __init__(self, codes):
         self.codes = codes
