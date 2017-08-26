@@ -1,6 +1,6 @@
 import queue as Q
 from classfile import *
-
+import time
 
 
 #Depths
@@ -12,47 +12,41 @@ from classfile import *
 
 
 class Node():
-    def __init__(self, timetable, depth, adjDepth):
+    def __init__(self, timetable, depth, adjDepth, cindex):
         self.timetable = timetable
         self.depth = depth
         self.adjDepth = adjDepth
         self.weight = timetable.getHWeight()
+        self.cindex=cindex
 
 
 def getChildren(node):
     children = []
     currentDepth = node.adjDepth
-    for courseIndex in range(len(node.timetable.codes)):
-        if node.timetable.assigned[currentDepth][courseIndex]==0:
-            for stream in \
-                Courses[node.timetable.codes[courseIndex]].streams[currentDepth]:
-                t = node.timetable.makeCopy()
-                if t.canAdd(stream):
-                    t.addStream(stream)
-                    n = Node(t, node.depth+1, getAdjDepth(t))
-                    children +=[n]
-
-
-
-##    if node.adjDepth == 3:
-##        for index, l in enumerate(node.timetable.Wassigned):
-##            if l==0:
-##                for stream in Courses[node.timetable.codes[index]].workshops:
-##                    t = node.timetable.makeCopy()
-##                    if t.canAdd(stream):
-##                        t.addStream(stream)
-##                        n = Node(t, node.depth+1, isDone(t))
-##                        children +=[n]
+    if node.timetable.assigned[currentDepth][node.cindex]==0:
+        for stream in \
+            Courses[node.timetable.codes[node.cindex]].streams[currentDepth]:
+            t = node.timetable.makeCopy()
+            if t.canAdd(stream):
+                t.addStream(stream)
+                adj = getAdjDepth(t)
+                n = Node(t, node.depth+1, adj[0], adj[1])
+                children +=[n]
     return children            
     
 
 def getAdjDepth(timetable):
     #If there are missing lectures(index 11), depth is 0
     for i in range(26):
-        if 0 in timetable.assigned[i]:
-            return i
-    return 26
-        
+        for j, item in enumerate(timetable.assigned[i]):
+            if item==0:
+                return i,j
+    return 26, 0
+
+def printTimeTable(node):
+    t = node.timetable
+    for s in t.streams:
+        print (s.code +" + " + s.name)
         
 
 lectures = []
@@ -106,36 +100,71 @@ for a, b in enumerate([0,3,4]):
 q = []
 
 
-get_dictionary("INFS1200", "MATH1061", "MATH1052")
+get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1052", "MATH1061", "INFS1200")
 Courses = returnDictionary()
-emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052"])
-emptyNode = Node(emptyTimetable, 0, getAdjDepth(emptyTimetable))
+emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052", "STAT1201"])
+adj = getAdjDepth(emptyTimetable) 
+emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
 q.append(emptyNode)
-best = False
+best = []
 bestVal = 1000
 mostRecent = 0
 nodes = 0
+cut = 0
+starttime = time.time()
 while len(q)>0:
     current = q.pop()
     nodes +=1
+    
+    
     if nodes%10000==0:
         print (nodes)
-        if nodes-mostRecent >=10000:
-            break
+    if nodes-mostRecent >=50000:
+        break
+    if nodes > 200000:
+        break
+    if current.timetable.getHWeight()>bestVal:
+        
+        cut+=1
+        continue
     if current.adjDepth == 26:
         if current.timetable.getWeight()<bestVal:
             bestVal = current.timetable.getWeight()
-            best = current
+            best = [current]
             mostRecent = nodes
             print("New best at " + str(bestVal))
+        elif current.timetable.getWeight()==bestVal:
+            best += [current]
+            mostRecent = nodes
         continue
     children = getChildren(current)
     for c in children:
         q.append(c)
 
+maintime = time.time() - starttime
+
+THEBESTS = []
+BestDays = 10
+
+for b in best:
+    days = [0, 0, 0, 0, 0]
+    t = b.timetable
+    for s in t.streams:
+        for d in s.days:
+            days[d]+=1
+    total = 0
+    for d in days:
+        if d!=0:
+            total+=1
+    if total<BestDays:
+        THEBEST = [b]
+        BestDays = total
+    elif total==BestDays:
+        THEBEST+=[b]
 
 
-t = best.timetable
+
+t = best[0].timetable
 
 for s in t.streams:
     print (s.code +" + " + s.name)
