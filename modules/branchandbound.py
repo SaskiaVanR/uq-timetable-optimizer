@@ -102,7 +102,7 @@ q = []
 
 get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1052", "MATH1061", "INFS1200")
 Courses = returnDictionary()
-emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052", "STAT1201"])
+emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052"])
 adj = getAdjDepth(emptyTimetable) 
 emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
 q.append(emptyNode)
@@ -162,10 +162,16 @@ for b in best:
     elif total==BestDays:
         THEBEST+=[b]
 
+fulltime = time.time()-starttime
 
+parttime = fulltime - maintime
 
 t = best[0].timetable
 
+print("----TIME----")
+print("Fulltime: "+str(fulltime)+", Main: "+str(maintime)+", Part: "+parttime)
+print("----BandB----")
+      
 for s in t.streams:
     print (s.code +" + " + s.name)
     
