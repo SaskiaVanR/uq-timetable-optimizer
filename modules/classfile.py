@@ -73,7 +73,21 @@ class Timetable():
             i+=1
         print("not a valid course code: " + code + " in " + str(self.codes))
         return False
+
+    def canAdd(self, stream):
+        for i in range(len(stream.starts)):
+            print(stream.starts[i],stream.ends[i])
+            for hour in range(stream.starts[i],stream.ends[i]):
+                continue
+                
+        print ("done")
         
+
+    def getHours(self):
+        hours = [[],[],[],[],[]]
+        for s in self.streams:
+            for index, time in range(len(s.starts)):
+               continue 
 
     def getWeight(self):
         starts = [24, 24, 24, 24, 24]
@@ -172,7 +186,7 @@ practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
 
 infs1200 = Course("INFS1200", lectures, tutorials, practicals, workshops)
-print (infs1200.getWeight())
+#print (infs1200.getWeight())
 
 
 lecturesm = []
@@ -191,8 +205,9 @@ Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
 
 t = Timetable(["INFS1200", "INFS2200"])
 
+#print(t.getWeight())
 t.addStreams(lectures)
 t.addStreams(tutorials)
 t.addStreams(practicals)
 
-print(t.getWeight())
+#print(t.getWeight())
