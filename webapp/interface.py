@@ -12,15 +12,16 @@ def check_codes():
     subject_4_code = str(subject_4_tbx.get())
 
     subject_codes = [subject_1_code, subject_2_code, subject_3_code, subject_4_code]
+    subject_codes = list(filter(None, subject_codes))
+    print(subject_codes)
 
-    duplicate_codes = False
     all_codes_valid = True
 
     if len(subject_codes) == len(set(subject_codes)):
 
         for i in subject_codes:
             # Check the code exists
-            if does_course_exist(i) == False:
+            if does_course_exist(i) is False:
                 all_codes_valid = False
 
         if all_codes_valid:
@@ -45,7 +46,7 @@ subject_check_error = tk.StringVar()
 
 entry_width = 12
 
-subject_lbl = tk.Label(window, text="Enter your subject (leave blank when N/A):")
+subject_lbl = tk.Label(window, text="Enter your subjects (leave blank when N/A):")
 subject_1_lbl = tk.Label(window, text="Subject 1", justify="right")
 subject_1_tbx = tk.Entry(window, width=entry_width)
 subject_2_lbl = tk.Label(window, text="Subject 2", justify="right")

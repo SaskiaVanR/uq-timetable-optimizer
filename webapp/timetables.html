@@ -1,11 +1,4 @@
-def output_timetables(subject_codes):
 
-    timetables = []
-
-    file_name = "timetables.html"
-    timetables_file = open(file_name, "w")
-
-    timetables_file.write('''
     <!DOCTYPE html>
     <html>
     <head>
@@ -18,11 +11,7 @@ def output_timetables(subject_codes):
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center">Here are your optimized timetables:</a>
       </div>
-    </nav>\n
-    ''')
+    </nav>
 
-    for i in timetables:
-        timetables_file.write("<tr><td>" + "" + "</td></tr>\n")
-
-    timetables_file.write("</body>\n</html>")
-    
+    </body>
+</html>
