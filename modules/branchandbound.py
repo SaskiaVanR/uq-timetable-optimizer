@@ -49,8 +49,7 @@ def printTimeTable(node):
         print (s.code +" + " + s.name)
 
 def daysBranchAndBound(optCourses):
-    get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
-               "INFS1200", "MATH1061", "MATH1052")
+    get_dictionary(*optCourses)
     Courses = returnDictionary()
     emptyTimetable = Timetable(optCourses)
     adj = getAdjDepth(emptyTimetable) 
@@ -170,6 +169,7 @@ def optimize(courses):
 
 def optimizeDays(courses):
     b = DaysBranchAndBound(courses)
+    return b 
 
 lectures = []
 tutorials = []
