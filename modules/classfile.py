@@ -195,6 +195,30 @@ class Timetable():
         else:
             return True
 
+    # Function hat gets a lower bound of the number of days
+    # It's not particularly tight but it checks whether any new days need
+    # to be added or not
+    def getHDays:
+        # Get days which have already had things assigned to them
+        days = [0,0,0,0,0]
+        for s in self.streams:
+            for d in s.days:
+                if days[d] == 0:
+                    days[d] = 1
+        for i in range(len(self.codes))
+            course = Courses[self.codes[i]]
+            for j in range(26):
+                # Check if stream type exists for course
+                if course.streams[j] != 0:
+                    # Check if stream type has not been assigned
+                    if self.assigned[j][i] == 0:
+                        # Check which days this stream type is available on
+                        for k in course.streams[j]:
+                            for l in course.streams[j][k].days:
+                                if days[l] != 1:
+                                    # There isn't overlap
+                                    # Nothing to do here yet
+
 
 # def getTestTimetable():
     # lectures = []
