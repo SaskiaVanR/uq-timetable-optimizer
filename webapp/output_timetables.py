@@ -36,10 +36,19 @@ def output_timetables(subject_codes):
     </thead>\n
     ''')
 
+    # Create a 2D array for the timetable
+    timetablegrid = [[""] * 24]
+    for i in range(7):
+        timetablegrid.append([""] * 24)
+
     for i in timetable.streams:
         if i == 0:
             timetables_file.write("<tr><td>" + timetable.codes[i] + "</td></tr>\n")
             timetables_file.write("<tr><td>" + timetable.streams[i] + "</td></tr>\n")
+        # Update the 2D array
+        for j in range(len(i.days)):
+            for k in range(i.ends[j] - i.starts[j]):
+                timetablegrid[i.days[j]][i.starts[j] + k] = i.name
 
     for time in range(1, 24):
         for day in range(0,4):
