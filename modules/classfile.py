@@ -10,14 +10,14 @@ class Course():
     # gets the total number of hours required for the course per week
     def getWeight(self):
         time = 0
-        if len(lectures)!=0:
-            time += lectures[0].timeTotal
-        if len(tutorials)!=0:
-            time += tutorials[0].timeTotal
-        if len(practicals)!=0:
-            time += practicals[0].timeTotal
-        if len(workshops)!=0:
-            time += workshops[0].timeTotal
+        if len(self.lectures)!=0:
+            time += self.lectures[0].timeTotal
+        if len(self.tutorials)!=0:
+            time += self.tutorials[0].timeTotal
+        if len(self.practicals)!=0:
+            time += self.practicals[0].timeTotal
+        if len(self.workshops)!=0:
+            time += self.workshops[0].timeTotal
         return time
         
 
@@ -41,5 +41,27 @@ class Class():
         return time
 
 
-           
+class Timetable():
+    def __init__(self, codes):
+        self.codes = []
+        self.classes = []
+
+    def addClass(self, myClass):
+        self.classes +=[myClass]
+
+    def getWeight(self):
+        starts = [24, 24, 24, 24, 24]
+        ends = [0, 0, 0, 0, 0,]
+        for c in self.classes:
+            for index, day in c.days:
+                if starts[day] > c.starts[index]:
+                    starts[day] = c.starts[index]
+                if ends[day] < c.ends[index]:
+                    ends[day] = c.ends[index]
+        weight = 0
+        for i in range(5):
+            starts[i] = starts[i]%24
+            weight += ends[i] = starts[i]
+        
+                
            
