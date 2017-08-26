@@ -1,8 +1,6 @@
 # Global variables
 # Dictionary storing course names and associating them with course classes
 Courses = {}
-# alpha = ["A", "B", "C", "D", "E", "F", "G", "H" "I", "J" ,"K", "L", "M",\
-         # "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
 # Class that stores information on a course
 # It contains the course code, and a bunch of streams
@@ -73,9 +71,14 @@ class Timetable():
     def __init__(self, codes):
         self.codes = codes
         self.streams = []
+        # Array that indicates which streams have been assigned
+        # 0 means it is not assigned
+        # 1 means it has been assigned
+        # -1 means it does not need to be assigned
         self.assigned = self.makeAssignArray()
         self.needToAssign()
         
+    # Function that initialises the assign array
     def makeAssignArray(self):
         numCodes = len(self.codes)
         array = [0]*26
@@ -83,6 +86,7 @@ class Timetable():
             array[i] = [0]*numCodes
         return array
 
+    # Function that takes a stream and adds it to the timetable
     def addStream(self, stream):
         index = ord(stream.name[0]) - ord("A")
         codeIndex = self.getCodeIndex(stream.code)
@@ -99,25 +103,30 @@ class Timetable():
                 if c.streams[i]==0:
                     self.assigned[i][index] = -1
 
+    # Function that returns a copy of the timetable
     def makeCopy(self):
         t = Timetable(self.codes)
         for s in self.streams:
             t.addStream(s)
         return t
 
+    # Function that takes a list of streams and adds them to the timetable
     def addStreams(self, streams):
         for i in streams:
             self.addStream(i)
 
+    # Function that takes a course code and returns the index of that 
+    # course in timetable.codes
     def getCodeIndex(self, code):
         i = 0
-        while i< len(self.codes):
+        while i < len(self.codes):
             if self.codes[i] == code:
                 return i
             i+=1
-        print("not a valid course code: " + code + " in " + str(self.codes))
+        print("Not a valid course code: " + code + " in " + str(self.codes))
         return False
 
+    # Function that determines whether a stream can be added to the timetable
     def canAdd(self, stream):
         hours = self.getHours()
         for i in range(len(stream.starts)):
@@ -126,7 +135,7 @@ class Timetable():
                     return False
         return True
         
-
+    # Function that gets the amount of time spent in class each day
     def getHours(self):
         hours = [[],[],[],[],[]]
         for s in self.streams:
@@ -135,6 +144,8 @@ class Timetable():
                     hours[s.days[i]]+=[time]
         return hours
 
+    # Function that gets the current weight
+    # Weight is the amount of hours spent on campus
     def getWeight(self):
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
@@ -150,6 +161,8 @@ class Timetable():
             weight += ends[i] - starts[i]
         return weight
 
+    # Function that gets a lower bound on the weight
+    # Weight is the amount of hours spent on campus
     def getHWeight(self):
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
@@ -182,6 +195,7 @@ class Timetable():
                         weight += course.streams[letter][0].timeTotal              
         return weight
                 
+    # This function needs a comment explaining it TODO
     def isWithinTime(self, stream):
         starts = [24, 24, 24, 24, 24]
         ends = [0, 0, 0, 0, 0,]
@@ -202,7 +216,7 @@ class Timetable():
         else:
             return True
 
-    # Function hat gets a lower bound of the number of days
+    # Function that gets a lower bound of the number of days
     # It's not particularly tight but it checks whether any new days need
     # to be added or not
     def getHDays(self):
@@ -226,8 +240,8 @@ class Timetable():
                                     return self.getDays() + 1
         return self.getDays()
 
-
-
+    # Function that returns the number of days that have had
+    # streams assigned to them so far
     def getDays(self):
         days = [0, 0, 0, 0, 0]
         #for each assigned stream
@@ -241,33 +255,6 @@ class Timetable():
                 total+=1
         return total
                 
-                
-
-
-# def getTestTimetable():
-    # lectures = []
-    # tutorials = []
-    # practicals = []
-    # lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
-    # tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
-    # practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
-    # infs1 = lectures + tutorials + practicals
-    # infs1200 = Course("INFS1200", infs1)
-    # #print (infs1200.getWeight())
-    # lecturesm = []
-    # tutorialsm = []
-    # practicalsm = []
-    # lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
-    # tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
-    # practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
-    # infs2 = lecturesm + tutorialsm + practicalsm
-    # infs2200 = Course("INFS2200", infs2)
-    # Courses = {"INFS1200": infs1200, "INFS2200": infs2200}
-    # t = Timetable(["INFS1200", "INFS2200"])
-    # streams = infs1 + infs2
-    # t.addStreams(streams)
-    # return t
-
 # Function that takes a list of courses and gets a dictionary from it
 def get_dictionary(*coursecodes):
     courses = []
@@ -275,9 +262,9 @@ def get_dictionary(*coursecodes):
         from data_interact import get_course_info
         course = get_course_info(i)
         courses.append(course)
-        print (course, i)
         Courses[i] = course
 
+# Function that returns the Courses dictionary
 def returnDictionary():
     return Courses
 
@@ -290,6 +277,8 @@ def get_test_timetable():
             Courses["INFS1200"].streams[ord("P") - ord("A")][0]]
     timetable.addStreams(streams)
     return timetable
+
+# TODO: remove everything below here
 
 lectures = []
 tutorials = []
