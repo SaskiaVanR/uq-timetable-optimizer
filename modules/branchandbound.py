@@ -7,3 +7,5 @@ q.put((5, 'five'))
 while not q.empty():
     print(q.get(),)
 
+for a, b in enumerate([0,3,4]):
+    print(a,b)
