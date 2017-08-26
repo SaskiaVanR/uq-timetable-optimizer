@@ -258,5 +258,4 @@ Courses = returnDictionary()
 ##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
       
 
-#a = optimize(["COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
-             #  "INFS1200", "MATH1061", "MATH1052"])
+a = optimize(["INFS1200", "MATH1061"])
