@@ -49,6 +49,83 @@ def printTimeTable(node):
         print (s.code +" + " + s.name)
         
 
+def mainBranchAndBound(optCourses):
+    get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
+               "INFS1200", "MATH1061", "MATH1052")
+    Courses = returnDictionary()
+    emptyTimetable = Timetable(optCourses)
+    adj = getAdjDepth(emptyTimetable) 
+    emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
+    q.append(emptyNode)
+    best = []
+    bestVal = 1000
+    mostRecent = 0
+    nodes = 0
+    cut = 0
+    while len(q)>0:
+        current = q.pop()
+        nodes +=1
+        
+        
+        if nodes%5000==0:
+            print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
+        if nodes-mostRecent >=50000:
+            break
+        if nodes > 100000:
+            break
+        if current.timetable.getHWeight()>bestVal:
+            
+            cut+=1
+            continue
+        if current.adjDepth == 26:
+            if current.timetable.getWeight()<bestVal:
+                bestVal = current.timetable.getWeight()
+                best = [current]
+                mostRecent = nodes
+                print("New best at " + str(bestVal))
+            elif current.timetable.getWeight()==bestVal:
+                best += [current]
+                mostRecent = nodes
+            continue
+        children = getChildren(current)
+        for c in children:
+            q.append(c)
+    return best
+
+
+def reduceDays(best):
+
+    THEBEST = []
+    BestDays = 10
+
+    for b in best:
+        days = [0, 0, 0, 0, 0]
+        t = b.timetable
+        for s in t.streams:
+            for d in s.days:
+                days[d]+=1
+        total = 0
+        for d in days:
+            if d!=0:
+                total+=1
+        if total<BestDays:
+            THEBEST = [b]
+            BestDays = total
+        elif total==BestDays:
+            THEBEST+=[b]
+
+    return THEBEST
+
+
+def optimize(courses):
+    b = mainBranchAndBound(courses)
+    best = reduceDays(b)
+    if len(best)!=0:
+        t = best[0].timetable
+        for s in t.streams:
+            print (s.code +" + " + s.name)
+    return best
+
 lectures = []
 tutorials = []
 practicals = []
@@ -61,7 +138,7 @@ practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
 practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
 
 
-infs1 = lectures+ tutorials+ practicals+workshops
+infs1 = lectures+tutorials+practicals+workshops
 
 
 infs1200 = Course("INFS1200", infs1)
@@ -99,80 +176,87 @@ for a, b in enumerate([0,3,4]):
 #q = Q.PriorityQueue()
 q = []
 
-
-get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1052", "MATH1061", "INFS1200")
+optcourses = ["INFS1200", "MATH1061"]
+get_dictionary("COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
+               "INFS1200", "MATH1061", "MATH1052")
 Courses = returnDictionary()
-emptyTimetable = Timetable(["INFS1200", "MATH1061", "MATH1052"])
-adj = getAdjDepth(emptyTimetable) 
-emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
-q.append(emptyNode)
-best = []
-bestVal = 1000
-mostRecent = 0
-nodes = 0
-cut = 0
-starttime = time.time()
-while len(q)>0:
-    current = q.pop()
-    nodes +=1
-    
-    
-    if nodes%10000==0:
-        print (nodes)
-    if nodes-mostRecent >=50000:
-        break
-    if nodes > 200000:
-        break
-    if current.timetable.getHWeight()>bestVal:
-        
-        cut+=1
-        continue
-    if current.adjDepth == 26:
-        if current.timetable.getWeight()<bestVal:
-            bestVal = current.timetable.getWeight()
-            best = [current]
-            mostRecent = nodes
-            print("New best at " + str(bestVal))
-        elif current.timetable.getWeight()==bestVal:
-            best += [current]
-            mostRecent = nodes
-        continue
-    children = getChildren(current)
-    for c in children:
-        q.append(c)
+##emptyTimetable = Timetable(optcourses)
+##adj = getAdjDepth(emptyTimetable) 
+##emptyNode = Node(emptyTimetable, 0, adj[0],adj[1])
+##q.append(emptyNode)
+##best = []
+##bestVal = 1000
+##mostRecent = 0
+##nodes = 0
+##cut = 0
+##starttime = time.time()
+##while len(q)>0:
+##    current = q.pop()
+##    nodes +=1
+##    
+##    
+##    if nodes%5000==0:
+##        print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
+##    if nodes-mostRecent >=50000:
+##        break
+##    if nodes > 100000:
+##        break
+##    if current.timetable.getHWeight()>bestVal:
+##        
+##        cut+=1
+##        continue
+##    if current.adjDepth == 26:
+##        if current.timetable.getWeight()<bestVal:
+##            bestVal = current.timetable.getWeight()
+##            best = [current]
+##            mostRecent = nodes
+##            print("New best at " + str(bestVal))
+##        elif current.timetable.getWeight()==bestVal:
+##            best += [current]
+##            mostRecent = nodes
+##        continue
+##    children = getChildren(current)
+##    for c in children:
+##        q.append(c)
+##
+##maintime = time.time() - starttime
+##
+##THEBESTS = []
+##BestDays = 10
+##
+##for b in best:
+##    days = [0, 0, 0, 0, 0]
+##    t = b.timetable
+##    for s in t.streams:
+##        for d in s.days:
+##            days[d]+=1
+##    total = 0
+##    for d in days:
+##        if d!=0:
+##            total+=1
+##    if total<BestDays:
+##        THEBEST = [b]
+##        BestDays = total
+##    elif total==BestDays:
+##        THEBEST+=[b]
+##
+##fulltime = time.time()-starttime
+##
+##parttime = fulltime - maintime
+##
+##b = mainBranchAndBound(optcourses)
+##best = reduceDays(b)
+##if len(best)!=0:
+##    t = best[0].timetable
+##    for s in t.streams:
+##        print (s.code +" + " + s.name)
 
-maintime = time.time() - starttime
-
-THEBESTS = []
-BestDays = 10
-
-for b in best:
-    days = [0, 0, 0, 0, 0]
-    t = b.timetable
-    for s in t.streams:
-        for d in s.days:
-            days[d]+=1
-    total = 0
-    for d in days:
-        if d!=0:
-            total+=1
-    if total<BestDays:
-        THEBEST = [b]
-        BestDays = total
-    elif total==BestDays:
-        THEBEST+=[b]
-
-fulltime = time.time()-starttime
-
-parttime = fulltime - maintime
-
-t = best[0].timetable
-
-print("----TIME----")
-print("Fulltime: "+str(fulltime)+", Main: "+str(maintime)+", Part: "+parttime)
-print("----BandB----")
+##print("----TIME----")
+##print("Fulltime: "+str(fulltime)+", Main: "+str(maintime)+\
+##      ", Part: "+str(parttime))
+##print("----BandB----")
+##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
       
-for s in t.streams:
-    print (s.code +" + " + s.name)
-    
-    
+
+#a = optimize(["COMP7308", "STAT1201", "COMP7500", "MATH1050", "MATH4202", \
+             #  "INFS1200", "MATH1061", "MATH1052"])
