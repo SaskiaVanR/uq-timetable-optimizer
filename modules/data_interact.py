@@ -18,10 +18,11 @@ def get_course_info(coursename):
         # # This is to identify things like X01 in MATH1061 which only
         # # happens once and probably isn't important
         # streamoccurrences = [0] * 26
-        # Identify which is at St Lucia
+        # Identify which is at St Lucia with Internal delivery mode
         stLuciaIndex = 0
         for i in range(len(coursejson['courses'])):
-            if coursejson['courses'][i]['campus'] == "St Lucia":
+            if coursejson['courses'][i]['campus'] == "St Lucia" \
+                    and coursejson['courses'][i]['delivery_mode'] == "Internal":
                 stLuciaIndex = i
                 break
         #Iterate over the streams
