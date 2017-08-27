@@ -79,14 +79,14 @@ reset_btn = tk.Button(window, text="Reset", font=(font_body, font_body_size), re
 
 # Align widgets to grid
 subject_lbl.grid(row=0, columnspan=2, padx=10, pady=10)
-subject_tbx.grid(row=1, column=0, padx=5, pady=5, sticky="ns")
+subject_tbx.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
 add_subject_btn.grid(row = 1, column=1, padx=5, pady=5, ipadx=5, sticky="we")
 added_subjects_lbl.grid(row=2, columnspan=2, padx=5, pady=5)
 subject_check_lbl.grid(row = 3, columnspan=2, padx=5, pady=5)
 
 options_lbl.grid(row=4, columnspan=2, padx=5, pady=5)
 output_timetables_btn.grid(row=5, column=0, padx=5, pady=5, ipadx=5, sticky="we")
-reset_btn.grid(row=5, column=1, padx=5, pady=5, ipadx=5)
+reset_btn.grid(row=5, column=1, padx=5, pady=5, ipadx=5, sticky="we")
 
 # Give widgets white background
 subject_lbl.configure(background="white")

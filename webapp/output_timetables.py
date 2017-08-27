@@ -18,7 +18,7 @@ def output_timetables(subject_codes):
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-    <head>
+    </head>
     
     <body>
     <nav>
@@ -28,7 +28,8 @@ def output_timetables(subject_codes):
     </nav>
     <div class="row">
     <div class="col s12">
-      <ul class="tabs">
+      <ul class="tabs scrollable-tabs">
+    </div>
     ''')
 
     for i in range(len(nodes)):
@@ -55,26 +56,7 @@ def output_timetables(subject_codes):
         </thead>
         ''')
 
-        timetables_file.write('</table></div>')
+        timetables_file.write('</table>\n</div>\n')
 
-    # # Create a 2D array for the timetable
-    # timetablegrid = [[""] * 24]
-    # for i in range(7):
-    #     timetablegrid.append([""] * 24)
-    #
-    # for i in timetable.streams:
-    #     if i == 0:
-    #         timetables_file.write("<tr><td>" + timetable.codes[i] + "</td></tr>\n")
-    #         timetables_file.write("<tr><td>" + timetable.streams[i] + "</td></tr>\n")
-    #     # Update the 2D array
-    #     for j in range(len(i.days)):
-    #         for k in range(i.ends[j] - i.starts[j]):
-    #             timetablegrid[i.days[j]][i.starts[j] + k] = i.name
-    #
-    # for time in range(1, 24):
-    #     for day in range(0,4):
-    #         if time == timetable.streams.starts[0]:
-    #             D = 1
-
-    timetables_file.write("</body>\n</html>")
+    timetables_file.write("</div></body>\n</html>")
     webbrowser.open(file_name)
