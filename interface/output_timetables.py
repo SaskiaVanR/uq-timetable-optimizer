@@ -3,6 +3,7 @@ import ctypes
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
+from tkinter import messagebox
 sys.path.append("../modules")
 import branchandbound
 import helpers
@@ -25,6 +26,10 @@ def output_timetables(subject_codes, max_hours, search_type, ignored_types):
         nodes = branchandbound.optimize(subject_codes, max_hours)
     else:
         nodes = branchandbound.optimizeDays(subject_codes, max_hours)
+
+    if len(nodes) == 0:
+        messagebox.showerror("Sorry :(", "There are no timetables.", "OK")
+        return
 
     window = tk.Tk()
     window.configure(background="white")
