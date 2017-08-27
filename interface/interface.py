@@ -78,6 +78,7 @@ font_body_size = 12
 subject_lbl = tk.Label(window, text="Enter your subject codes:", font=(font_head, font_head_size))
 subject_tbx = tk.Entry(window, width=entry_width, justify="center", font=(font_body, font_body_size), relief="solid")
 subject_tbx.bind('<Return>', hit_return)
+subject_tbx.focus_set()
 add_subject_btn = tk.Button(window, text="Add", command=check_codes, font=(font_body, font_body_size), relief="flat")
 added_subjects_lbl = tk.Label(window, text="Added subjects:", textvariable=added_subjects, font=(font_body, font_body_size))
 subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_body_size))
