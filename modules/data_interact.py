@@ -5,9 +5,10 @@ from classfile import Course
 from classfile import Stream
 
 # Function that gets info on a course
+# It optionally takes the campus name (defaulting to St Lucia)
 # It opens the file for it and parses info from the json
 # Return the data as a course class
-def get_course_info(coursename):
+def get_course_info(coursename, campus = "St Lucia"):
     coursename = coursename.upper()
     try:
         coursejson = json.loads(open("../scraper/data/" \
@@ -21,7 +22,7 @@ def get_course_info(coursename):
         # Identify which is at St Lucia with Internal delivery mode
         stLuciaIndex = 0
         for i in range(len(coursejson['courses'])):
-            if coursejson['courses'][i]['campus'] == "St Lucia" \
+            if coursejson['courses'][i]['campus'] == campus \
                     and coursejson['courses'][i]['delivery_mode'] == "Internal":
                 stLuciaIndex = i
                 break
