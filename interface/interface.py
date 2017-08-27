@@ -97,7 +97,9 @@ max_hours_label = tk.Label(window, text="Max desired hours in a row:", font=(fon
 # Label for preferred search level
 max_hours_label = tk.Label(window, text="Max desired hours in a row:", font=(font_head, font_head_size))
 # Entry field for entering max_hours
-max_hours_textbox = tk.Spinbox(window, from_=1, to=24, justify="center", font=(font_body, font_body_size), relief="solid")
+max_hours_default = tk.StringVar()
+max_hours_textbox = tk.Spinbox(window, from_=1, to=24, textvariable=max_hours_default, justify="center", font=(font_body, font_body_size), relief="solid")
+max_hours_default.set("24")
 # TODO: fix/implement the below
 # Label for setting preferred search type (min days first or min campus hours)
 search_type_label = tk.Label(window, text="Preferred:", font=(font_head, font_head_size))
@@ -110,7 +112,7 @@ search_type_hours = tk.Radiobutton(window, text="Minimize campus hours", padx = 
 
 # Label for skipped lecture types
 skip_types_label = tk.Label(window, text="Ignore these class types:", font=(font_head, font_head_size))
-# Entry field for entering max_hours
+# Entry field for entering skipped types
 skip_types_textbox = tk.Entry(window, width=24, justify="center", font=(font_body, font_body_size), relief="solid")
 # TODO: more options
 
