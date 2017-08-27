@@ -28,7 +28,7 @@ def output_timetables(subject_codes, max_hours, search_type, ignored_types):
         nodes = branchandbound.optimizeDays(subject_codes, max_hours)
 
     if len(nodes) == 0:
-        messagebox.showerror("Sorry :(", "There are no timetables.", "OK")
+        messagebox.showerror("Sorry :(", "There are no timetables.")
         return
 
     window = tk.Tk()
