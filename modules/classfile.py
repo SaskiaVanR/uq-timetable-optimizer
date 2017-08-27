@@ -306,10 +306,11 @@ class Timetable():
 def get_dictionary(*coursecodes):
     courses = []
     for i in coursecodes:
-        from data_interact import get_course_info
-        course = get_course_info(i)
-        courses.append(course)
-        Courses[i] = course
+        if i not in Courses:
+            from data_interact import get_course_info
+            course = get_course_info(i)
+            courses.append(course)
+            Courses[i] = course
 
 # Function that returns the Courses dictionary
 def returnDictionary():
