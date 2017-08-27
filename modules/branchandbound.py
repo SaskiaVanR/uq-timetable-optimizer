@@ -173,7 +173,7 @@ def reduceWeight(best):
 
     return THEBEST
 
-def optimize(courses, maxTime):
+def optimize(courses, maxTime=24):
     print("--------- Weight, then Days ----------")
     b = mainBranchAndBound(courses, maxTime)
     print(len(b))
@@ -186,7 +186,7 @@ def optimize(courses, maxTime):
             print (s.code +" + " + s.name)
     return best
 
-def optimizeDays(courses, maxTime):
+def optimizeDays(courses, maxTime=24):
     print("--------- Days, then Weight ----------")
     b = daysBranchAndBound(courses, maxTime)
     print(len(b))
@@ -253,7 +253,7 @@ for a, b in enumerate([0,3,4]):
 ##print("----BandB----")
 ##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
       
-clist = ["INFS7203", "COMP7702", "CSSE7610"]
-a = optimize(clist, 1)
+clist = ["STAT1201", "BIOL1040"]
+a = optimize(clist, 3)
 d = optimizeDays(clist, 5)
 
