@@ -72,11 +72,11 @@ def get_course_info(coursename):
         return course
     except: return None
 
-# Function that tells you if a course exists
-# It will check if it has been scraped
+# Function that tells you if all courses passed to it exist
+# It will check if all courses given have been scraped
 # and return true or false
-def does_course_exist(coursename):
-    if os.path.exists("../scraper/data/" + coursename.upper()):
-        return True
-    else:
-        return False
+def does_course_exist(*coursenames):
+    for i in coursenames:
+        if not os.path.exists("../scraper/data/" + i.upper()):
+            return False
+    return True
