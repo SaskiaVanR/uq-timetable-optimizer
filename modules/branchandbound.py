@@ -48,7 +48,7 @@ def printTimeTable(node):
     for s in t.streams:
         print (s.code +" + " + s.name)
 
-def daysBranchAndBound(optCourses, maxTime=24):
+def daysBranchAndBound(optCourses, maxTime):
     q = []
     get_dictionary(*optCourses)
     Courses = returnDictionary()
@@ -211,7 +211,9 @@ def optimizeDays(courses, maxTime=24):
     b = daysBranchAndBound(courses, maxTime)
     print(len(b))
     
-    best = reduceWeight(b)
+    better = reduceWeight(b)
+    print(len(better))
+    best = reduceEarlyMornings(better)
     print(len(best))
     if len(best)!=0:
         t = best[0].timetable
