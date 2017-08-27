@@ -154,7 +154,6 @@ class Timetable():
                     inARow = 1
                 i+=1
             if inARow >maxTime:
-                print (inARow)
                 return False
                 
         
