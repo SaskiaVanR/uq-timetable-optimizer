@@ -90,7 +90,7 @@ def daysBranchAndBound(optCourses, maxTime=24):
     return best
         
 
-def mainBranchAndBound(optCourses, maxTime=24):
+def mainBranchAndBound(optCourses, maxTime):
     q = []
     get_dictionary(*optCourses)
     Courses = returnDictionary()
@@ -173,11 +173,31 @@ def reduceWeight(best):
 
     return THEBEST
 
+def reduceEarlyMornings(best):
+    THEBEST = []
+    earliest = 0
+    n = 100
+
+    for b in best:
+        e, num = b.timetable.getEarlyMornings()
+        if e>earliest or (e==earliest and num<n):
+            earliest = e
+            THEBEST = [b]
+            n = num
+        elif e == earliest and num==n:
+            THEBEST +=[b]
+
+    return THEBEST
+    
+
 def optimize(courses, maxTime=24):
     print("--------- Weight, then Days ----------")
     b = mainBranchAndBound(courses, maxTime)
     print(len(b))
-    best = reduceDays(b)
+    better = reduceDays(b)
+    print(len(better))
+    
+    best = reduceEarlyMornings(better)
     print(len(best))
     if len(best)!=0:
         t = best[0].timetable
@@ -252,8 +272,8 @@ def optimizeDays(courses, maxTime=24):
 ####      ", Part: "+str(parttime))
 ####print("----BandB----")
 ####print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
-##      
+##
 ##clist = ["STAT1201", "BIOL1040"]
-##a = optimize(clist, 3, "St Lucia")
+##a = optimize(clist, 4)
 ##d = optimizeDays(clist, 5)
 
