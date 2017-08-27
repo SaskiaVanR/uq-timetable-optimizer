@@ -40,12 +40,12 @@ def check_codes():
 def submit_codes():
     if len(checked_subject_codes) != 0:
         ot.output_timetables(checked_subject_codes)
-        reset()
     else:
         subject_check_error.set("Add some subjects")
 
 
 def reset():
+    subject_tbx.delete(0, 'end')
     subject_check_error.set("")
     checked_subject_codes.clear()
     added_subjects.set("Added subjects: ")
