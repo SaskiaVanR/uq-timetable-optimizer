@@ -16,6 +16,10 @@ def day_to_int(day):
         return 3
     elif day.lower() == "friday":
         return 4
+    elif day.lower() == "saturday":
+        return 5
+    elif day.lower() == "sunday":
+        return 6
     else:
         return None
 
@@ -31,6 +35,10 @@ def int_to_day(day):
         return "Thursday"
     elif day == 4:
         return "Friday"
+    elif day == 5:
+        return "Saturday"
+    elif day == 6:
+        return "Sunday"
     else:
         return None
 
@@ -64,7 +72,7 @@ def get_classes_from_stream(coursecode, streamname):
 def get_timetable_array(timetable):
     # Create a 2D array for the timetable
     timetablegrid = [[""] * 24] # one day
-    for i in range(5): # Five days in a week
+    for i in range(7): # Seven days in a week
         timetablegrid.append([""] * 24)
     
     # Fill the array
