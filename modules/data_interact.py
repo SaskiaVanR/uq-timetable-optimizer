@@ -14,10 +14,10 @@ def get_course_info(coursename):
                 + coursename.upper()).read())
         # Initialise empty array
         streams = [] # Array of streams
-        # Array showing how many streams there is for each type of class
-        # This is to identify things like X01 in MATH1061 which only
-        # happens once and probably isn't important
-        streamoccurrences = [0] * 26
+        # # Array showing how many streams there is for each type of class
+        # # This is to identify things like X01 in MATH1061 which only
+        # # happens once and probably isn't important
+        # streamoccurrences = [0] * 26
         #Iterate over the streams
         for i in range(len(coursejson['courses'][0]['activity_streams'])):
             # Get the name of the string (eg T01)
@@ -32,8 +32,8 @@ def get_course_info(coursename):
             # (including repeats of weekly classes)
             for j in range(len(coursejson['courses'][0]['activity_streams']\
                     [i]['events'])):
-                # Add to streamoccurrences
-                streamoccurrences[ord(streamname[0]) - ord("A")] += 1
+                # # Add to streamoccurrences
+                # streamoccurrences[ord(streamname[0]) - ord("A")] += 1
                 newdaystring = str(coursejson['courses'][0]['activity_streams']\
                         [i]['events'][j]['day'])
                 from helpers import day_to_int
@@ -59,15 +59,15 @@ def get_course_info(coursename):
                     stream = Stream(coursename.upper(), \
                             streamname, starts, ends, days)
                     streams.append(stream)
-        # Iterate over the letters and see what the counts are
-        for i in range(26):
-            if streamoccurrences[i] == 1:
-                # There is something that only happens once
-                # This probably shouldn't be counted
-                for j in range(len(streams)):
-                    if ord(streams[j].name[0]) - ord("A") == i:
-                        del streams[j]
-                        break
+        # # Iterate over the letters and see what the counts are
+        # for i in range(26):
+            # if streamoccurrences[i] == 1:
+                # # There is something that only happens once
+                # # This probably shouldn't be counted
+                # for j in range(len(streams)):
+                    # if ord(streams[j].name[0]) - ord("A") == i:
+                        # del streams[j]
+                        # break
         course = Course(coursename,  streams)
         return course
     except: return None
