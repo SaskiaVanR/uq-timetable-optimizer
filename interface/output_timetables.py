@@ -16,8 +16,9 @@ def output_timetables(subject_codes, max_hours, search_type, ignored_types):
         i += 1
 
     # Remove ignored types
-    for i in subject_codes:
-        helpers.remove_streams_from_course_name(i, ignored_types)
+    if len(ignored_types) > 0:
+        for i in subject_codes:
+            helpers.remove_streams_from_course_name(i, ignored_types)
 
     nodes = []
     if search_type == 1:
@@ -60,9 +61,11 @@ def output_timetables(subject_codes, max_hours, search_type, ignored_types):
         frames += [ttk.Frame(note)]
         note.add(frames[nindex], text='Option '+str(nindex+1))
 
-        # background_grid += tk.Label(frames[nindex], text="")
-        # background_grid[-1].grid(row=0, column=0)
-        # background_grid[-1].configure(background="white")
+        for x in range(8):
+            for y in range(7, 21):
+                background_grid += [tk.Label(frames[nindex], text="")]
+                background_grid[-1].grid(column=x, row=y)
+                background_grid[-1].configure(background="white")
 
         for sindex, s in enumerate(n.timetable.streams):
             for dindex, d in enumerate(s.days):
