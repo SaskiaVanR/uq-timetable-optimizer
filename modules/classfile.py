@@ -316,6 +316,12 @@ def get_dictionary(*coursecodes):
 def returnDictionary():
     return Courses
 
+# Function that adds things to the Courses dictionary
+def add_to_dictionary(coursename):
+    from data_interact import get_course_info
+    Courses[coursename] = get_course_info(coursename)
+
+
 # Gets a test timetable
 def get_test_timetable():
     get_dictionary("INFS1200")

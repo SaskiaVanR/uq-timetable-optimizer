@@ -40,9 +40,9 @@ def check_codes():
 def submit_codes():
     if len(checked_subject_codes) != 0:
         max_hours = int(max_hours_textbox.get())
-        ignored_types = str(max_hours_textbox.get())
+        ignored_types = str(skip_types_textbox.get())
         ot.output_timetables(checked_subject_codes, max_hours, \
-                search_type.get())
+                search_type.get(), ignored_types)
     else:
         subject_check_error.set("Add some subjects")
 

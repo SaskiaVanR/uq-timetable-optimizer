@@ -2,6 +2,7 @@ from classfile import Timetable
 from classfile import Stream
 from classfile import Course
 from classfile import returnDictionary
+from classfile import add_to_dictionary
 
 # Function that takes a day of the week formatted as a string
 # and returns an integer, 0 = Monday, 6 = Sunday
@@ -98,5 +99,6 @@ def remove_streams_from_course(course, streams):
 # Function that takes a course name and removes streams from the course
 # in the dictionary
 def remove_streams_from_course_name(coursename, streams):
+    add_to_dictionary(coursename)
     course = returnDictionary()[coursename]
     remove_streams_from_course(course, streams)

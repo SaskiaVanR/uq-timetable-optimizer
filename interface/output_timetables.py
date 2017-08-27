@@ -8,12 +8,16 @@ import branchandbound
 import helpers
 
 
-def output_timetables(subject_codes, max_hours, search_type):
+def output_timetables(subject_codes, max_hours, search_type, ignored_types):
 
     i = 0
     while i<len(subject_codes):
         subject_codes[i] = subject_codes[i].upper()
         i += 1
+
+    # Remove ignored types
+    for i in subject_codes:
+        helpers.remove_streams_from_course_name(i, ignored_types)
 
     nodes = []
     if search_type == 1:
