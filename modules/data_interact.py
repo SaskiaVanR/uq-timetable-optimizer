@@ -38,6 +38,8 @@ def get_course_info(coursename):
                         [i]['events'][j]['day'])
                 from helpers import day_to_int
                 newday = day_to_int(newdaystring)
+                if newday == None:
+                    return None
                 newstart = int(coursejson['courses'][0]['activity_streams'][i]\
                         ['events'][j]\
                         ['start'].split("T", 1)[1].split(":", 1)[0])
