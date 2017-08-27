@@ -137,7 +137,7 @@ class Timetable():
         
     # Function that gets the amount of time spent in class each day
     def getHours(self):
-        hours = [[],[],[],[],[]]
+        hours = [[],[],[],[],[],[],[]]
         for s in self.streams:
             for i in range(len(s.starts)):
                 for time in range(s.starts[i],s.ends[i]):
@@ -147,8 +147,8 @@ class Timetable():
     # Function that gets the current weight
     # Weight is the amount of hours spent on campus
     def getWeight(self):
-        starts = [24, 24, 24, 24, 24]
-        ends = [0, 0, 0, 0, 0,]
+        starts = [24, 24, 24, 24, 24,24,24]
+        ends = [0, 0, 0, 0, 0,0,0]
         for c in self.streams:
             for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
@@ -156,7 +156,7 @@ class Timetable():
                 if ends[day] < c.ends[index]:
                     ends[day] = c.ends[index]
         weight = 0
-        for i in range(5):
+        for i in range(7):
             starts[i] = starts[i]%24
             weight += ends[i] - starts[i]
         return weight
@@ -164,8 +164,8 @@ class Timetable():
     # Function that gets a lower bound on the weight
     # Weight is the amount of hours spent on campus
     def getHWeight(self):
-        starts = [24, 24, 24, 24, 24]
-        ends = [0, 0, 0, 0, 0,]
+        starts = [24, 24, 24, 24, 24,24,24]
+        ends = [0, 0, 0, 0, 0,0,0]
         for c in self.streams:
             for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
@@ -173,7 +173,7 @@ class Timetable():
                 if ends[day] < c.ends[index]:
                     ends[day] = c.ends[index]
         weight = 0
-        for i in range(5):
+        for i in range(7):
             starts[i] = starts[i]%24
             weight += ends[i] - starts[i]
 
@@ -197,15 +197,15 @@ class Timetable():
                 
     # This function needs a comment explaining it TODO
     def isWithinTime(self, stream):
-        starts = [24, 24, 24, 24, 24]
-        ends = [0, 0, 0, 0, 0,]
+        starts = [24, 24, 24, 24, 24,24,24]
+        ends = [0, 0, 0, 0, 0,0,0]
         for c in self.streams:
             for index, day in enumerate(c.days):
                 if starts[day] > c.starts[index]:
                     starts[day] = c.starts[index]
                 if ends[day] < c.ends[index]:
                     ends[day] = c.ends[index]
-        for i in range(5):
+        for i in range(7):
             starts[i] = starts[i]%24
         #checks if any class within a stream falls outside of already
         #assigned hours
@@ -221,7 +221,7 @@ class Timetable():
     # to be added or not
     def getHDays(self):
         # Get days which have already had things assigned to them
-        days = [0,0,0,0,0]
+        days = [0,0,0,0,0,0,0]
         for s in self.streams:
             for d in s.days:
                 if days[d] == 0:
@@ -243,7 +243,7 @@ class Timetable():
     # Function that returns the number of days that have had
     # streams assigned to them so far
     def getDays(self):
-        days = [0, 0, 0, 0, 0]
+        days = [0, 0, 0, 0, 0,0,0]
         #for each assigned stream
         for s in self.streams:
             for d in s.days:

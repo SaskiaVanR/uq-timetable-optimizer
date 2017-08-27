@@ -253,7 +253,7 @@ for a, b in enumerate([0,3,4]):
 ##print("----BandB----")
 ##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
       
-clist = ["STAT1201", "GEOS1100","ERTH1000","BIOL1040"]
+clist = ["BIOL1040"]
 a = optimize(clist)
 d = optimizeDays(clist)
 
