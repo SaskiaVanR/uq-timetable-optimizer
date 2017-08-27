@@ -7,10 +7,16 @@ from data_interact import does_course_exist
 
 checked_subject_codes = []
 
+# Function for when return is hit in the checkbox
+def hit_return(event):
+    check_codes()
 
 def check_codes():
     # Get subject codes from text boxes
     subject_code = str(subject_tbx.get())
+
+    # Clear the textbox
+    subject_tbx.delete(0, 'end')
 
     # Put them into an array
 
@@ -54,6 +60,7 @@ if 'win' in sys.platform:  # If windows
 # Create window
 window = tk.Tk()
 window.configure(background="white")
+#window.minsize(width = 800, height = 600)
 
 # Give window a title
 window.title("UQ Timetable Optimizer")
@@ -70,6 +77,7 @@ font_body_size = 12
 # Create widgets
 subject_lbl = tk.Label(window, text="Enter your subject codes:", font=(font_head, font_head_size))
 subject_tbx = tk.Entry(window, width=entry_width, justify="center", font=(font_body, font_body_size), relief="solid")
+subject_tbx.bind('<Return>', hit_return)
 add_subject_btn = tk.Button(window, text="Add", command=check_codes, font=(font_body, font_body_size), relief="flat")
 added_subjects_lbl = tk.Label(window, text="Added subjects:", textvariable=added_subjects, font=(font_body, font_body_size))
 subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_body_size))
