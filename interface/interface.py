@@ -40,6 +40,7 @@ def check_codes():
 def submit_codes():
     if len(checked_subject_codes) != 0:
         ot.output_timetables(checked_subject_codes)
+        reset()
     else:
         subject_check_error.set("Add some subjects")
 
@@ -75,17 +76,26 @@ font_head_size = 16
 font_body_size = 12
 
 # Create widgets
+# Label saying to enter codes
 subject_lbl = tk.Label(window, text="Enter your subject codes:", font=(font_head, font_head_size))
+# Entry field for entering codes
 subject_tbx = tk.Entry(window, width=entry_width, justify="center", font=(font_body, font_body_size), relief="solid")
 subject_tbx.bind('<Return>', hit_return)
 subject_tbx.focus_set()
+# Button for adding them
 add_subject_btn = tk.Button(window, text="Add", command=check_codes, font=(font_body, font_body_size), relief="flat")
+# List of added subjects (currently label, TODO change to list)
 added_subjects_lbl = tk.Label(window, text="Added subjects:", textvariable=added_subjects, font=(font_body, font_body_size))
 subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, font=(font_body, font_body_size))
 
+# Label for setting options
 options_lbl = tk.Label(window, text="Options:", font=(font_head, font_head_size))
+# TODO: add options
+
+# Button for outputting timetables
 output_timetables_btn = tk.Button(window, text="Output timetables", command=submit_codes, font=(font_body, font_body_size), relief="flat")
-reset_btn = tk.Button(window, text="Reset", command=reset, font=(font_body, font_body_size), relief="flat")
+# Button for clearing selection
+reset_btn = tk.Button(window, text="Clear", command=reset, font=(font_body, font_body_size), relief="flat")
 
 # Align widgets to grid
 subject_lbl.grid(row=0, columnspan=2, padx=10, pady=10)
