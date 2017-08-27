@@ -175,7 +175,7 @@ def reduceWeight(best):
 
 def optimize(courses, maxTime=24):
     print("--------- Weight, then Days ----------")
-    b = mainBranchAndBound(courses, maxTime, campus)
+    b = mainBranchAndBound(courses, maxTime)
     print(len(b))
     best = reduceDays(b)
     print(len(best))
@@ -188,7 +188,7 @@ def optimize(courses, maxTime=24):
 
 def optimizeDays(courses, maxTime=24):
     print("--------- Days, then Weight ----------")
-    b = daysBranchAndBound(courses, maxTime, campus)
+    b = daysBranchAndBound(courses, maxTime)
     print(len(b))
     
     best = reduceWeight(b)
