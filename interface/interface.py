@@ -127,7 +127,7 @@ subject_check_lbl.grid(row = 3, columnspan=2, padx=5, pady=5)
 
 options_lbl.grid(row=4, columnspan=2, padx=5, pady=5)
 max_hours_label.grid(row=5, padx=5, pady=5)
-max_hours_textbox.grid(row=5, column=1, padx=5, pady=5)
+max_hours_textbox.grid(row=5, column=1, padx=5, pady=5, sticky="nsew")
 search_type_label.grid(row=6, column=0, rowspan=2)
 search_type_days.grid(row=6, column=1)
 search_type_hours.grid(row=7, column=1)
