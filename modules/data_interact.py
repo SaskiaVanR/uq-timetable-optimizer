@@ -38,6 +38,8 @@ def get_course_info(coursename):
                         [i]['events'][j]['day'])
                 from helpers import day_to_int
                 newday = day_to_int(newdaystring)
+                if newday == None:
+                    return None
                 newstart = int(coursejson['courses'][0]['activity_streams'][i]\
                         ['events'][j]\
                         ['start'].split("T", 1)[1].split(":", 1)[0])
@@ -70,11 +72,11 @@ def get_course_info(coursename):
         return course
     except: return None
 
-# Function that tells you if a course exists
-# It will check if it has been scraped
+# Function that tells you if all courses passed to it exist
+# It will check if all courses given have been scraped
 # and return true or false
-def does_course_exist(coursename):
-    if os.path.exists("../scraper/data/" + coursename.upper()):
-        return True
-    else:
-        return False
+def does_course_exist(*coursenames):
+    for i in coursenames:
+        if not os.path.exists("../scraper/data/" + i.upper()):
+            return False
+    return True
