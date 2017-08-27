@@ -219,7 +219,7 @@ def optimizeDays(courses, maxTime=24):
         print("Weight: "+str(t.getWeight()) + " Days: " + str(t.getDays()))
         for s in t.streams:
             print (s.code +" + " + s.name)
-    return best[5:]
+    return best
 
 ##lectures = []
 ##tutorials = []
@@ -274,7 +274,7 @@ def optimizeDays(courses, maxTime=24):
 ####print("----BandB----")
 ####print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
 ##
-#clist = ["MATH1052"]
+#clist = ["INFS1200"]
 #a = optimize(clist, 4)
 #d = optimizeDays(clist)
 
