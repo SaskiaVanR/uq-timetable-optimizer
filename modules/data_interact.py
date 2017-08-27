@@ -18,11 +18,18 @@ def get_course_info(coursename):
         # # This is to identify things like X01 in MATH1061 which only
         # # happens once and probably isn't important
         # streamoccurrences = [0] * 26
+        # Identify which is at St Lucia
+        stLuciaIndex = 0
+        for i in range(len(coursejson['courses'])):
+            if coursejson['courses'][i]['campus'] == "St Lucia":
+                stLuciaIndex = i
+                break
         #Iterate over the streams
-        for i in range(len(coursejson['courses'][0]['activity_streams'])):
+        for i in range(len(coursejson['courses'][stLuciaIndex]\
+                ['activity_streams'])):
             # Get the name of the string (eg T01)
-            streamname = str(coursejson['courses'][0]['activity_streams']\
-                    [i]['name'])
+            streamname = str(coursejson['courses'][stLuciaIndex]\
+                    ['activity_streams'][i]['name'])
             # Initialise empty arrays
             times = [] # array for testing, string
             days = [] # array of ints for each day, 0 = monday
@@ -30,21 +37,21 @@ def get_course_info(coursename):
             ends = [] # array of ints for each end time, 15 = 3:00pm
             # Iterate over the events in the stream
             # (including repeats of weekly classes)
-            for j in range(len(coursejson['courses'][0]['activity_streams']\
-                    [i]['events'])):
+            for j in range(len(coursejson['courses'][stLuciaIndex]\
+                    ['activity_streams'][i]['events'])):
                 # # Add to streamoccurrences
                 # streamoccurrences[ord(streamname[0]) - ord("A")] += 1
-                newdaystring = str(coursejson['courses'][0]['activity_streams']\
-                        [i]['events'][j]['day'])
+                newdaystring = str(coursejson['courses'][stLuciaIndex]\
+                        ['activity_streams'][i]['events'][j]['day'])
                 from helpers import day_to_int
                 newday = day_to_int(newdaystring)
                 if newday == None:
                     return None
-                newstart = int(coursejson['courses'][0]['activity_streams'][i]\
-                        ['events'][j]\
+                newstart = int(coursejson['courses'][stLuciaIndex]\
+                        ['activity_streams'][i]['events'][j]\
                         ['start'].split("T", 1)[1].split(":", 1)[0])
-                newend = int(coursejson['courses'][0]['activity_streams'][i]\
-                        ['events'][j]\
+                newend = int(coursejson['courses'][stLuciaIndex]\
+                        ['activity_streams'][i]['events'][j]\
                         ['end'].split("T", 1)[1].split(":", 1)[0]) + 1
                 newtime =  str(newday) + " " + str(newstart) + " " + str(newend)
                 # Check if this has been seen before in an earlier week
@@ -53,8 +60,8 @@ def get_course_info(coursename):
                     days.append(newday)
                     starts.append(newstart)
                     ends.append(newend)
-                if j == len(coursejson['courses'][0]['activity_streams']\
-                        [i]['events']) - 1:
+                if j == len(coursejson['courses'][stLuciaIndex]\
+                        ['activity_streams'][i]['events']) - 1:
                     # At the last point in the iteration
                     stream = Stream(coursename.upper(), \
                             streamname, starts, ends, days)
