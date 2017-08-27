@@ -41,6 +41,7 @@ def submit_codes():
 def reset():
     subject_check_error.set("")
     checked_subject_codes.clear()
+    added_subjects.set("Added subjects: ")
 
 # Set widget fonts
 font_head = ""
@@ -75,7 +76,7 @@ subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, 
 
 options_lbl = tk.Label(window, text="Options:", font=(font_head, font_head_size))
 output_timetables_btn = tk.Button(window, text="Output timetables", command=submit_codes, font=(font_body, font_body_size), relief="flat")
-reset_btn = tk.Button(window, text="Reset", font=(font_body, font_body_size), relief="flat")
+reset_btn = tk.Button(window, text="Reset", command=reset, font=(font_body, font_body_size), relief="flat")
 
 # Align widgets to grid
 subject_lbl.grid(row=0, columnspan=2, padx=10, pady=10)
