@@ -143,7 +143,7 @@ class Timetable():
         for index, h in enumerate(hours):
             hours[index]= sorted(h)
         for day in hours:
-            inARow = 0
+            inARow = 1
             if len(day)<=1:
                 continue
             i = 1
@@ -151,7 +151,7 @@ class Timetable():
                 if day[i]-day[i-1]==1:
                     inARow +=1
                 else:
-                    inARow = 0
+                    inARow = 1
                 i+=1
             if inARow >maxTime:
                 print (inARow)
