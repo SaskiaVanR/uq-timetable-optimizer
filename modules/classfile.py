@@ -127,12 +127,32 @@ class Timetable():
         return False
 
     # Function that determines whether a stream can be added to the timetable
-    def canAdd(self, stream):
+    def canAdd(self, stream, maxTime):
         hours = self.getHours()
         for i in range(len(stream.starts)):
             for hour in range(stream.starts[i],stream.ends[i]):
                 if hour in hours[stream.days[i]]:
                     return False
+
+        if maxTime>=24 and maxTime<=0:
+            return True
+        for index, h in enumerate(hours):
+            hours[index]= sorted(h)
+        for day in hours:
+            inARow = 0
+            if len(day)<=1:
+                continue
+            i = 1
+            while i < len(day):
+                if day[i]-day[i-1]==1:
+                    inARow +=1
+                else:
+                    inARow = 0
+                i+=1
+            if inARow >=maxTime:
+                return False
+                
+        
         return True
         
     # Function that gets the amount of time spent in class each day

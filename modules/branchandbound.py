@@ -20,14 +20,14 @@ class Node():
         self.cindex=cindex
 
 
-def getChildren(node):
+def getChildren(node, maxTime):
     children = []
     currentDepth = node.adjDepth
     if node.timetable.assigned[currentDepth][node.cindex]==0:
         for stream in \
             Courses[node.timetable.codes[node.cindex]].streams[currentDepth]:
             t = node.timetable.makeCopy()
-            if t.canAdd(stream):
+            if t.canAdd(stream, maxTime):
                 t.addStream(stream)
                 adj = getAdjDepth(t)
                 n = Node(t, node.depth+1, adj[0], adj[1])
@@ -48,7 +48,7 @@ def printTimeTable(node):
     for s in t.streams:
         print (s.code +" + " + s.name)
 
-def daysBranchAndBound(optCourses):
+def daysBranchAndBound(optCourses, maxTime=24):
     q = []
     get_dictionary(*optCourses)
     Courses = returnDictionary()
@@ -84,13 +84,13 @@ def daysBranchAndBound(optCourses):
                 best += [current]
                 mostRecent = nodes
             continue
-        children = getChildren(current)
+        children = getChildren(current, maxTime)
         for c in children:
             q.append(c)
     return best
         
 
-def mainBranchAndBound(optCourses):
+def mainBranchAndBound(optCourses, maxTime=24):
     q = []
     get_dictionary(*optCourses)
     Courses = returnDictionary()
@@ -128,7 +128,7 @@ def mainBranchAndBound(optCourses):
                 best += [current]
                 mostRecent = nodes
             continue
-        children = getChildren(current)
+        children = getChildren(current, maxTime)
         for c in children:
             q.append(c)
     return best
@@ -173,9 +173,9 @@ def reduceWeight(best):
 
     return THEBEST
 
-def optimize(courses):
+def optimize(courses, maxTime):
     print("--------- Weight, then Days ----------")
-    b = mainBranchAndBound(courses)
+    b = mainBranchAndBound(courses, maxTime)
     print(len(b))
     best = reduceDays(b)
     print(len(best))
@@ -186,9 +186,9 @@ def optimize(courses):
             print (s.code +" + " + s.name)
     return best
 
-def optimizeDays(courses):
+def optimizeDays(courses, maxTime):
     print("--------- Days, then Weight ----------")
-    b = daysBranchAndBound(courses)
+    b = daysBranchAndBound(courses, maxTime)
     print(len(b))
     
     best = reduceWeight(b)
@@ -253,7 +253,7 @@ for a, b in enumerate([0,3,4]):
 ##print("----BandB----")
 ##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
       
-clist = ["BIOL1040"]
-a = optimize(clist)
-d = optimizeDays(clist)
+clist = ["INFS7203", "COMP7702", "CSSE7610"]
+a = optimize(clist, 1)
+d = optimizeDays(clist, 5)
 
