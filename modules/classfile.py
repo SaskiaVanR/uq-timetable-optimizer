@@ -136,6 +136,10 @@ class Timetable():
 
         if maxTime>=24 and maxTime<=0:
             return True
+
+        for i in range(len(stream.starts)):
+            for time in range(stream.starts[i],stream.ends[i]):
+                hours[stream.days[i]]+=[time]
         for index, h in enumerate(hours):
             hours[index]= sorted(h)
         for day in hours:
@@ -149,7 +153,8 @@ class Timetable():
                 else:
                     inARow = 0
                 i+=1
-            if inARow >=maxTime:
+            if inARow >maxTime:
+                print (inARow)
                 return False
                 
         
@@ -163,6 +168,23 @@ class Timetable():
                 for time in range(s.starts[i],s.ends[i]):
                     hours[s.days[i]]+=[time]
         return hours
+
+    def getEarlyMornings(self):
+        hours = self.getHours()
+        earliest = 24
+        num = 0
+        for day in hours:
+            if day == []:
+                continue
+            m = min(day)
+            if m<earliest:
+                earliest = m
+                num = 1
+            elif m==earliest:
+                num+=1
+
+        return (earliest,num)
+            
 
     # Function that gets the current weight
     # Weight is the amount of hours spent on campus
@@ -212,7 +234,13 @@ class Timetable():
                             #break, do not add do heuristic
                             break
                     else:
-                        weight += course.streams[letter][0].timeTotal              
+                        if len(course.streams[letter])==1:
+                            weight += course.streams[letter][0].timeTotal
+                        else:
+                            totals = []
+                            for t in course.streams[letter]:
+                                totals +=[t.timeTotal]
+                            weight += min(totals)
         return weight
                 
     # This function needs a comment explaining it TODO
