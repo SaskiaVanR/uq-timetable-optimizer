@@ -274,7 +274,7 @@ def optimizeDays(courses, maxTime=24):
 ####print("----BandB----")
 ####print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
 ##
-clist = ["MATH1052"]
+#clist = ["MATH1052"]
 #a = optimize(clist, 4)
-d = optimizeDays(clist)
+#d = optimizeDays(clist)
 
