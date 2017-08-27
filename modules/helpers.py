@@ -76,3 +76,13 @@ def get_timetable_array(timetable):
                 timetablegrid[i.days[j]][i.starts[j] + k] \
                         += i.code + " " + i.name
     return timetablegrid
+
+
+# Function that takes a Course class and removes streams from it
+# Takes, as arguments, a Course class and a string of capital letters
+# Letters in the string will have their streams removed from the Course
+def remove_streams_from_course(course, streams):
+    new = course
+    for i in streams:
+        if i.isupper():
+            new.streams[ord(i) - ord("A")] = 0
