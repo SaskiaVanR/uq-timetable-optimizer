@@ -9,6 +9,11 @@ import helpers
 
 def output_timetables(subject_codes):
 
+    i = 0
+    while i<len(subject_codes):
+        subject_codes[i] = subject_codes[i].upper()
+        i+=1
+
     nodes = branchandbound.optimize(subject_codes)
     print(nodes[0].timetable.streams)
 
