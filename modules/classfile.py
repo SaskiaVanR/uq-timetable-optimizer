@@ -134,7 +134,7 @@ class Timetable():
                 if hour in hours[stream.days[i]]:
                     return False
 
-        if maxTime>=24 and maxTime<=0:
+        if maxTime==None or maxTime>=24 and maxTime<=0:
             return True
 
         for i in range(len(stream.starts)):
