@@ -94,25 +94,22 @@ subject_check_lbl = tk.Label(window, text="", textvariable=subject_check_error, 
 # Label for setting options
 options_lbl = tk.Label(window, text="Options:", font=(font_head, font_head_size))
 # Label saying to enter max desired hours in a row
-max_hours_label = tk.Label(window, text="Max desired hours in a row:", font=(font_head, font_head_size))
-# Label for preferred search level
-max_hours_label = tk.Label(window, text="Max desired hours in a row:", font=(font_head, font_head_size))
+max_hours_label = tk.Label(window, text="Max desired hours in a row:", font=(font_body, font_body_size))
 # Entry field for entering max_hours
 max_hours_default = tk.StringVar()
 max_hours_textbox = tk.Spinbox(window, from_=1, to=24, textvariable=max_hours_default, justify="center", font=(font_body, font_body_size), relief="solid")
 max_hours_default.set("24")
-# TODO: fix/implement the below
 # Label for setting preferred search type (min days first or min campus hours)
-search_type_label = tk.Label(window, text="Preferred:", font=(font_head, font_head_size))
+search_type_label = tk.Label(window, text="Preferred:", font=(font_body, font_body_size))
 # Radio buttons
 # If this variable is 0, minimize days otherwise minimize campus hours
 search_type = tk.IntVar()
 search_type.set(0)
-search_type_days = tk.Radiobutton(window, text="Minimize days", padx = 20, variable=search_type, value=0)
-search_type_hours = tk.Radiobutton(window, text="Minimize campus hours", padx = 20, variable=search_type, value=1)
+search_type_days = tk.Radiobutton(window, text="Minimize days", padx = 20, variable=search_type, value=0, font=(font_body, font_body_size))
+search_type_hours = tk.Radiobutton(window, text="Minimize campus hours", padx = 20, variable=search_type, value=1, font=(font_body, font_body_size))
 
 # Label for skipped lecture types
-skip_types_label = tk.Label(window, text="Ignore these class types:", font=(font_head, font_head_size))
+skip_types_label = tk.Label(window, text="Ignore these class types:", font=(font_body, font_body_size))
 # Entry field for entering skipped types
 skip_types_textbox = tk.Entry(window, width=24, justify="center", font=(font_body, font_body_size), relief="solid")
 
@@ -131,11 +128,12 @@ subject_check_lbl.grid(row = 3, columnspan=2, padx=5, pady=5)
 options_lbl.grid(row=4, columnspan=2, padx=5, pady=5)
 max_hours_label.grid(row=5, padx=5, pady=5)
 max_hours_textbox.grid(row=5, column=1, padx=5, pady=5)
-search_type_label.grid(row=6, column=0)
+search_type_label.grid(row=6, column=0, rowspan=2)
 search_type_days.grid(row=6, column=1)
 search_type_hours.grid(row=7, column=1)
 skip_types_label.grid(row=8, column=0, padx=5, pady=5)
 skip_types_textbox.grid(row=8, column=1, padx=5, pady=5)
+
 output_timetables_btn.grid(row=9, column=0, padx=5, pady=5, ipadx=5, sticky="we")
 reset_btn.grid(row=9, column=1, padx=5, pady=5, ipadx=5, sticky="we")
 
@@ -146,6 +144,11 @@ added_subjects_lbl.configure(background="white")
 subject_check_lbl.configure(background="white")
 
 options_lbl.configure(background="white")
+max_hours_label.configure(background="white")
+search_type_label.configure(background="white")
+search_type_days.configure(background="white")
+search_type_hours.configure(background="white")
+skip_types_label.configure(background="white")
 
 # Show window
 window.mainloop()

@@ -20,8 +20,6 @@ def output_timetables(subject_codes, max_hours, search_type):
         nodes = branchandbound.optimize(subject_codes, max_hours)
     else:
         nodes = branchandbound.optimizeDays(subject_codes, max_hours)
-        
-    print(nodes[0].timetable.streams)
 
     window = tk.Tk()
     window.configure(background="white")
