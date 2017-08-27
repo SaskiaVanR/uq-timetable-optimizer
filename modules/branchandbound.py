@@ -175,7 +175,7 @@ def reduceWeight(best):
 
 def optimize(courses, maxTime=24):
     print("--------- Weight, then Days ----------")
-    b = mainBranchAndBound(courses, maxTime)
+    b = mainBranchAndBound(courses, maxTime, campus)
     print(len(b))
     best = reduceDays(b)
     print(len(best))
@@ -188,7 +188,7 @@ def optimize(courses, maxTime=24):
 
 def optimizeDays(courses, maxTime=24):
     print("--------- Days, then Weight ----------")
-    b = daysBranchAndBound(courses, maxTime)
+    b = daysBranchAndBound(courses, maxTime, campus)
     print(len(b))
     
     best = reduceWeight(b)
@@ -200,60 +200,60 @@ def optimizeDays(courses, maxTime=24):
             print (s.code +" + " + s.name)
     return best
 
-lectures = []
-tutorials = []
-practicals = []
-workshops = []
-lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
-tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
-tutorials +=[Stream("INFS1200", "T02", [9], [10], [4])]
-tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
-practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
-practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
+##lectures = []
+##tutorials = []
+##practicals = []
+##workshops = []
+##lectures +=[Stream("INFS1200", "L01", [12, 13], [14, 14],[3,4])]
+##tutorials +=[Stream("INFS1200", "T01", [15], [16], [1])]
+##tutorials +=[Stream("INFS1200", "T02", [9], [10], [4])]
+##tutorials +=[Stream("INFS1200", "T03", [10], [11], [4])]
+##practicals +=[Stream("INFS1200", "P01", [9], [10], [3])]
+##practicals +=[Stream("INFS1200", "P02", [10], [11], [3])]
+##
+##
+##infs1 = lectures+tutorials+practicals+workshops
+##
+##
+##infs1200 = Course("INFS1200", infs1)
+##
+##
+##lecturesm = []
+##tutorialsm = []
+##practicalsm = []
+##workshopsm = []
+##lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
+##tutorialsm +=[Stream("INFS2200", "T01", [15], [16], [3])]
+##tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
+##tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
+##practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
+##practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
+##
+##infs2 = lecturesm+ tutorialsm+ practicalsm+workshopsm
+##
+##infs2200 = Course("INFS2200", infs2)
 
 
-infs1 = lectures+tutorials+practicals+workshops
 
 
-infs1200 = Course("INFS1200", infs1)
-
-
-lecturesm = []
-tutorialsm = []
-practicalsm = []
-workshopsm = []
-lecturesm +=[Stream("INFS2200", "L01", [12, 13], [14, 14], [1,2])]
-tutorialsm +=[Stream("INFS2200", "T01", [15], [16], [3])]
-tutorialsm +=[Stream("INFS2200", "T02", [9], [10], [4])]
-tutorialsm +=[Stream("INFS2200", "T03", [10], [11], [3])]
-practicalsm +=[Stream("INFS2200", "P01", [9], [10], [2])]
-practicalsm +=[Stream("INFS2200", "P02", [10], [11], [2])]
-
-infs2 = lecturesm+ tutorialsm+ practicalsm+workshopsm
-
-infs2200 = Course("INFS2200", infs2)
-
-
-
-
-q = Q.PriorityQueue()
-q.put((10, 'ten'))
-q.put((1, 'one'))
-q.put((5, 'five'))
-while not q.empty():
-    print(q.get(),)
-
-for a, b in enumerate([0,3,4]):
-    print(a,b)
-
-
-##print("----TIME----")
-##print("Fulltime: "+str(fulltime)+", Main: "+str(maintime)+\
-##      ", Part: "+str(parttime))
-##print("----BandB----")
-##print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
-      
-clist = ["STAT1201", "BIOL1040"]
-a = optimize(clist, 3)
-d = optimizeDays(clist, 5)
+##q = Q.PriorityQueue()
+##q.put((10, 'ten'))
+##q.put((1, 'one'))
+##q.put((5, 'five'))
+##while not q.empty():
+##    print(q.get(),)
+##
+##for a, b in enumerate([0,3,4]):
+##    print(a,b)
+##
+##
+####print("----TIME----")
+####print("Fulltime: "+str(fulltime)+", Main: "+str(maintime)+\
+####      ", Part: "+str(parttime))
+####print("----BandB----")
+####print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
+##      
+##clist = ["STAT1201", "BIOL1040"]
+##a = optimize(clist, 3, "St Lucia")
+##d = optimizeDays(clist, 5)
 
