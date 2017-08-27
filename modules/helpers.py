@@ -86,3 +86,9 @@ def remove_streams_from_course(course, streams):
     for i in streams:
         if i.isupper():
             new.streams[ord(i) - ord("A")] = 0
+
+# Function that takes a course name and removes streams from the course
+# in the dictionary
+def remove_streams_from_course_name(coursename, streams):
+    course = returnDictionary()[coursename]
+    remove_streams_from_course(course, streams)
