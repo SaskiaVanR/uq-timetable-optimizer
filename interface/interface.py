@@ -41,7 +41,8 @@ def submit_codes():
     if len(checked_subject_codes) != 0:
         max_hours = int(max_hours_textbox.get())
         ignored_types = str(max_hours_textbox.get())
-        ot.output_timetables(checked_subject_codes, max_hours)
+        ot.output_timetables(checked_subject_codes, max_hours, \
+                search_type.get())
     else:
         subject_check_error.set("Add some subjects")
 
@@ -114,7 +115,6 @@ search_type_hours = tk.Radiobutton(window, text="Minimize campus hours", padx = 
 skip_types_label = tk.Label(window, text="Ignore these class types:", font=(font_head, font_head_size))
 # Entry field for entering skipped types
 skip_types_textbox = tk.Entry(window, width=24, justify="center", font=(font_body, font_body_size), relief="solid")
-# TODO: more options
 
 # Button for outputting timetables
 output_timetables_btn = tk.Button(window, text="Output timetables", command=submit_codes, font=(font_body, font_body_size), relief="flat")
@@ -136,7 +136,6 @@ search_type_days.grid(row=6, column=1)
 search_type_hours.grid(row=7, column=1)
 skip_types_label.grid(row=8, column=0, padx=5, pady=5)
 skip_types_textbox.grid(row=8, column=1, padx=5, pady=5)
-# TODO: more options
 output_timetables_btn.grid(row=9, column=0, padx=5, pady=5, ipadx=5, sticky="we")
 reset_btn.grid(row=9, column=1, padx=5, pady=5, ipadx=5, sticky="we")
 
