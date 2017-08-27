@@ -73,7 +73,6 @@ def daysBranchAndBound(optCourses, maxTime):
         if current.timetable.getHDays()>bestVal:
             
             cut+=1
-            continue
         if current.adjDepth == 26:
             if current.timetable.getDays()<bestVal:
                 bestVal = current.timetable.getDays()
@@ -220,7 +219,7 @@ def optimizeDays(courses, maxTime=24):
         print("Weight: "+str(t.getWeight()) + " Days: " + str(t.getDays()))
         for s in t.streams:
             print (s.code +" + " + s.name)
-    return best
+    return best[5:]
 
 ##lectures = []
 ##tutorials = []
@@ -275,7 +274,7 @@ def optimizeDays(courses, maxTime=24):
 ####print("----BandB----")
 ####print("q: "+str(len(q))+" nodes: " + str(nodes) + " cuts " + str(cut))
 ##
-##clist = ["STAT1201", "BIOL1040"]
-##a = optimize(clist, 4)
-##d = optimizeDays(clist, 5)
+clist = ["MATH1052"]
+#a = optimize(clist, 4)
+d = optimizeDays(clist)
 
